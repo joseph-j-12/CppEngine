@@ -129,6 +129,102 @@ run/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/build
 .PHONY : run/fast
 
+Engine/ColliderComp.o: Engine/ColliderComp.cpp.o
+.PHONY : Engine/ColliderComp.o
+
+# target to build an object file
+Engine/ColliderComp.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/ColliderComp.cpp.o
+.PHONY : Engine/ColliderComp.cpp.o
+
+Engine/ColliderComp.i: Engine/ColliderComp.cpp.i
+.PHONY : Engine/ColliderComp.i
+
+# target to preprocess a source file
+Engine/ColliderComp.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/ColliderComp.cpp.i
+.PHONY : Engine/ColliderComp.cpp.i
+
+Engine/ColliderComp.s: Engine/ColliderComp.cpp.s
+.PHONY : Engine/ColliderComp.s
+
+# target to generate assembly for a file
+Engine/ColliderComp.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/ColliderComp.cpp.s
+.PHONY : Engine/ColliderComp.cpp.s
+
+Engine/GObject.o: Engine/GObject.cpp.o
+.PHONY : Engine/GObject.o
+
+# target to build an object file
+Engine/GObject.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GObject.cpp.o
+.PHONY : Engine/GObject.cpp.o
+
+Engine/GObject.i: Engine/GObject.cpp.i
+.PHONY : Engine/GObject.i
+
+# target to preprocess a source file
+Engine/GObject.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GObject.cpp.i
+.PHONY : Engine/GObject.cpp.i
+
+Engine/GObject.s: Engine/GObject.cpp.s
+.PHONY : Engine/GObject.s
+
+# target to generate assembly for a file
+Engine/GObject.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GObject.cpp.s
+.PHONY : Engine/GObject.cpp.s
+
+Engine/GPhysics.o: Engine/GPhysics.cpp.o
+.PHONY : Engine/GPhysics.o
+
+# target to build an object file
+Engine/GPhysics.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GPhysics.cpp.o
+.PHONY : Engine/GPhysics.cpp.o
+
+Engine/GPhysics.i: Engine/GPhysics.cpp.i
+.PHONY : Engine/GPhysics.i
+
+# target to preprocess a source file
+Engine/GPhysics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GPhysics.cpp.i
+.PHONY : Engine/GPhysics.cpp.i
+
+Engine/GPhysics.s: Engine/GPhysics.cpp.s
+.PHONY : Engine/GPhysics.s
+
+# target to generate assembly for a file
+Engine/GPhysics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GPhysics.cpp.s
+.PHONY : Engine/GPhysics.cpp.s
+
+Engine/GScene.o: Engine/GScene.cpp.o
+.PHONY : Engine/GScene.o
+
+# target to build an object file
+Engine/GScene.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GScene.cpp.o
+.PHONY : Engine/GScene.cpp.o
+
+Engine/GScene.i: Engine/GScene.cpp.i
+.PHONY : Engine/GScene.i
+
+# target to preprocess a source file
+Engine/GScene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GScene.cpp.i
+.PHONY : Engine/GScene.cpp.i
+
+Engine/GScene.s: Engine/GScene.cpp.s
+.PHONY : Engine/GScene.s
+
+# target to generate assembly for a file
+Engine/GScene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GScene.cpp.s
+.PHONY : Engine/GScene.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -162,6 +258,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... run"
+	@echo "... Engine/ColliderComp.o"
+	@echo "... Engine/ColliderComp.i"
+	@echo "... Engine/ColliderComp.s"
+	@echo "... Engine/GObject.o"
+	@echo "... Engine/GObject.i"
+	@echo "... Engine/GObject.s"
+	@echo "... Engine/GPhysics.o"
+	@echo "... Engine/GPhysics.i"
+	@echo "... Engine/GPhysics.s"
+	@echo "... Engine/GScene.o"
+	@echo "... Engine/GScene.i"
+	@echo "... Engine/GScene.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
