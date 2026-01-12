@@ -6,5 +6,6 @@
 #include "Engine/GTransform.h"
 #include "Engine/GObject.h"
 #include "Engine/GComponent.h"
-
+#include "Engine/ColliderComp.h"
+#include "Engine/GPhysics.h"
 #endif

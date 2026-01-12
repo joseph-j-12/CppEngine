@@ -1,1 +1,29 @@
 #include "GScene.h"
+
+GScene::GScene() : physics(this)
+{
+
+}
+
+void GScene::Begin()
+{
+
+}
+
+
+void GScene::Tick_Objects(float DeltaTime)
+{
+
+}
+
+void GScene::Tick_Physics(float DeltaTime)
+{
+    physics.Tick(DeltaTime);
+}
+
+//todo
+std::vector<std::unique_ptr<GObject>> GScene::GetChildrenOf(GObject *parentObj)
+{
+    std::vector<std::unique_ptr<GObject>> children;
+    return children;
+}

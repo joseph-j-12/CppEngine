@@ -18,7 +18,7 @@ class GComponent{
 
     GComponent(GObject *myParentObject)
     {
-        parentObject = myParentObject;
+        gobject = myParentObject;
     }
     virtual ~GComponent() = default;
 
@@ -35,10 +35,11 @@ class GComponent{
             onEnabled();
         }
     }
-
+    
+    GObject *gobject;
     private:
     bool componentEnabled;
-    GObject *parentObject;
+    
 
 };
 #endif

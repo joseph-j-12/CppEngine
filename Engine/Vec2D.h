@@ -54,6 +54,11 @@ class Vec2D{
         return Vec2D(X*v.X, Y*v.Y);
     }
 
+    Vec2D operator*(const float num)
+    {
+        return Vec2D(X*num, Y*num);
+    }
+
     Vec2D operator-()
     {
         return Vec2D(-X, -Y);
@@ -64,9 +69,14 @@ class Vec2D{
         return v1.X*v2.X + v1.Y*v2.Y;
     }
 
+    static float CrossProduct(const Vec2D &v1, const Vec2D &v2)
+    {
+        return v1.X*v2.Y - v1.Y*v2.X;
+    }
+
     static float Distance(const Vec2D &v1, const Vec2D &v2)
     {
-        return std::sqrt(std::pow(v1.X-v2.X,2) + std::pow(v1.Y-v2.Y,2));
+        return std::sqrt((v1.X-v2.X)*(v1.X-v2.X) + (v1.Y-v2.Y)*(v1.Y-v2.Y));
     }
 };
 

@@ -2,7 +2,6 @@
 #define HEADER_GTransform
 
 #include "Vec2D.h"
-
 /*
 Transform class - has a position and rotation. It can have a parent.
 The parent transform will be applied on the object. for example 0,0 position will be the position of the parent
@@ -10,20 +9,25 @@ The parent transform will be applied on the object. for example 0,0 position wil
 The position vector stores local position, rotation stores local rotation
 
 */
+class GObject;
 class GTransform{
     private:
+    
     float CosandSin[4];
     
     public:
     Vec2D position; //local position
     float rotation; //local rotation
-    
+    Vec2D scale;
 
     GTransform* parent;
+    
+    GObject *gobject;
 
-    GTransform() : parent(nullptr)
+    GTransform() : parent(nullptr), scale(1,1)
     {
         rotation = 0.f;
+        calculateCosAndSine();
     }
 
     void calculateCosAndSine()
@@ -33,12 +37,12 @@ class GTransform{
     }
     Vec2D myScenePosition()
     {
+        calculateCosAndSine();
         return local_to_scene(Vec2D(0,0));
     }
 
     Vec2D local_to_scene(Vec2D pos)
     {
-        calculateCosAndSine();
         if (parent == nullptr)
         {
             return position + Vec2D(pos.X*CosandSin[0] - pos.Y*CosandSin[1], pos.X*CosandSin[1] + pos.Y*CosandSin[0]);
