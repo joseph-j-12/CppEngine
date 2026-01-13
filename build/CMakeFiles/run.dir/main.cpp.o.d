@@ -180,11 +180,6 @@ CMakeFiles/run.dir/main.cpp.o: \
  /usr/include/c++/15/pstl/glue_memory_defs.h \
  /usr/include/c++/15/pstl/execution_defs.h \
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
- /home/joseph/Documents/Github/CppEngine/Engine/GTransform.h \
- /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
- /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
- /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
  /usr/include/SFML/Graphics.hpp /usr/include/SFML/Window.hpp \
  /usr/include/SFML/System.hpp /usr/include/SFML/Config.hpp \
  /usr/include/SFML/System/Clock.hpp /usr/include/SFML/System/Export.hpp \
@@ -266,8 +261,13 @@ CMakeFiles/run.dir/main.cpp.o: \
  /usr/include/SFML/Graphics/Glsl.hpp /usr/include/SFML/Graphics/Glsl.inl \
  /usr/include/SFML/Graphics/Sprite.hpp \
  /usr/include/SFML/Graphics/Text.hpp \
- /usr/include/SFML/Graphics/VertexBuffer.hpp /usr/include/c++/15/thread \
- /usr/include/c++/15/bits/std_thread.h \
+ /usr/include/SFML/Graphics/VertexBuffer.hpp \
+ /home/joseph/Documents/Github/CppEngine/Engine/GTransform.h \
+ /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
+ /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
+ /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
+ /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
+ /usr/include/c++/15/thread /usr/include/c++/15/bits/std_thread.h \
  /usr/include/c++/15/bits/this_thread_sleep.h \
  /usr/include/c++/15/bits/chrono.h /usr/include/c++/15/ratio \
  /usr/include/c++/15/cstdint /usr/include/c++/15/bits/parse_numbers.h \

@@ -2,15 +2,19 @@
 #define HEADER_GPhysics
 #include "Vec2D.h"
 #include "GTransform.h"
+#include "SFML/Graphics.hpp"
 
 class GScene;
+class GColliderComp;
 class GPhysics
 {
 public:
     struct Collision{
         Vec2D point;
         Vec2D normal;
-        Vec2D tangent;
+        float depth;
+        GColliderComp* col1;
+        GColliderComp* col2;
     };
 
     enum ForceType{
@@ -22,11 +26,13 @@ public:
     void Tick(float DeltaTime);
     void Begin();
 
-    void GetCollisionBetweenObjects(GColliderComp* obj1, GColliderComp* obj2);
+    Collision GetCollisionBetweenObjects(GColliderComp* obj1, GColliderComp* obj2, sf::RenderWindow* window);
+    void HandleCollision(Collision col);
 
     void AddImpulseAtLocation(GObject* const object, Vec2D location , Vec2D force, ForceType ForceType = GPhysics::ForceType::Force);
 
     private:
+    
     GScene* myScene;
     void ApplyVelocities(float DeltaTime);
 

@@ -6,10 +6,12 @@
 
 sf::Color hsvToRgb(float h, float s, float v);
 
-Vec2D convertScreenToWorld(Vec2D screenPos, int screenwidth, int screenheight);
-Vec2D convertWorldToScreen(Vec2D worldPos, int screenwidth, int screenheight);
+Vec2D convertScreenToWorld(Vec2D screenPos, int screenwidth = 640, int screenheight= 480);
+Vec2D convertWorldToScreen(Vec2D worldPos, int screenwidth = 640, int screenheight= 480);
 void renderColliders(GScene* scene, sf::RenderWindow *window);
 
+int screenW = 640;
+int screenH = 480;
 int main() {
 
     sf::RenderWindow window(sf::VideoMode(640,480),"app");
@@ -38,24 +40,25 @@ int main() {
     GScene myScene;
     auto* newObj = myScene.AddNewObject<GObject>();
     auto* newObj2 = myScene.AddNewObject<GObject>();
+    newObj->transform.position = Vec2D(125,25);
     newObj2->setPhysicsEnabled(true);
     newObj->setPhysicsEnabled(true);
     ColliderShapeTemplate shapetemplate1;
     shapetemplate1.numPoints = 3;
     shapetemplate1.points = (Vec2D*)malloc(3*sizeof(Vec2D));
 
-    shapetemplate1.points[0].X = -25;
-    shapetemplate1.points[0].Y = -25;
+    shapetemplate1.points[0].X = -45;
+    shapetemplate1.points[0].Y = -45;
 
     shapetemplate1.points[1].X = 0;
-    shapetemplate1.points[1].Y = 25;
+    shapetemplate1.points[1].Y = 45;
     
-    shapetemplate1.points[2].X = 25;
-    shapetemplate1.points[2].Y = -25;
+    shapetemplate1.points[2].X = 45;
+    shapetemplate1.points[2].Y = -45;
     
     auto* coll = newObj->CreateComponent<GColliderComp>(newObj, GColliderComp::ColliderType::Polygon, &shapetemplate1);
     auto* coll2 = newObj2->CreateComponent<GColliderComp>(newObj2, GColliderComp::ColliderType::Polygon, &shapetemplate1);
-    newObj2->transform.position = Vec2D(-50,0);
+    //newObj2->transform.position = Vec2D(-50,0);
 
 
     while(window.isOpen())
@@ -75,12 +78,34 @@ int main() {
         }
         window.clear();
         newObj->transform.calculateCosAndSine();
-        newObj->angularVelocity = 3.14;
-        
-        myScene.physics.Tick(0.016f);
+        newObj->angularVelocity = 1.5;
+        newObj2->transform.position = posVec;
+        myScene.physics.Tick(0.01f);
+        GPhysics::Collision col = myScene.physics.GetCollisionBetweenObjects(coll2, coll, &window);
+        Vec2D colScreenPos = convertWorldToScreen(col.point);
+        shape2.setPosition(sf::Vector2f(colScreenPos.X-9, colScreenPos.Y-9));
+        Vec2D colEndPoint = convertWorldToScreen((col.normal.getNormal()*col.depth + col.point));
 
-        renderColliders(&myScene, &window);
+        std::array<sf::Vertex, 2> line = {
+        sf::Vertex(sf::Vector2f(colScreenPos.X, colScreenPos.Y), sf::Color::Red), // Start point and color
+        sf::Vertex(sf::Vector2f(colEndPoint.X, colEndPoint.Y), sf::Color::Red) // End point and color
+        };
         
+        if (col.depth > 0)
+        {
+            window.draw(line.data(), line.size(), sf::PrimitiveType::Lines);
+            window.draw(shape2);
+        }
+        //std::cout << col << std::endl;
+        renderColliders(&myScene, &window);
+        // if (col)
+        // {
+        //     sf::RectangleShape r;
+        //     r.setPosition(0,0);
+        //     r.setSize(sf::Vector2(25.f,25.f));
+        //     window.draw(r);
+
+        // }
         window.display(); 
         
     }
@@ -115,15 +140,15 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
 
                     sf::RectangleShape bound;
                     col->CalculateBoundingBox();
-                    Vec2D bTop = convertWorldToScreen(Vec2D(col->boundingBoxMin.X, col->boundingBoxMax.Y), 640,480);
-                    Vec2D bBottom = convertWorldToScreen(Vec2D(col->boundingBoxMax.X, col->boundingBoxMin.Y), 640,480);
-                    std::cout << bBottom.Y << "-" << bTop.Y << std::endl;
+                    Vec2D bTop = convertWorldToScreen(Vec2D(col->boundingBoxMin.X, col->boundingBoxMax.Y));
+                    Vec2D bBottom = convertWorldToScreen(Vec2D(col->boundingBoxMax.X, col->boundingBoxMin.Y));
+                    //std::cout << bBottom.Y << "-" << bTop.Y << std::endl;
                     bound.setPosition(bTop.X, bTop.Y);
                     bound.setSize(sf::Vector2(bBottom.X-bTop.X, bBottom.Y-bTop.Y));
                     bound.setFillColor(sf::Color::Transparent);
                     bound.setOutlineColor(sf::Color::Green);
                     bound.setOutlineThickness(1.f);
-                    window->draw(bound);
+                    //window->draw(bound);
                 }
             }
         }

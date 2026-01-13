@@ -18,7 +18,7 @@ class Vec2D{
 
     float magnitude()
     {
-        return std::sqrt(X*X+Y*Y);
+        return std::sqrtf(X*X+Y*Y);
     }
 
     //Edits the vector
@@ -74,9 +74,14 @@ class Vec2D{
         return v1.X*v2.Y - v1.Y*v2.X;
     }
 
+    static Vec2D GetPerpendicular(const Vec2D &v1)
+    {
+        return Vec2D(-v1.Y, v1.X);
+    }
+
     static float Distance(const Vec2D &v1, const Vec2D &v2)
     {
-        return std::sqrt((v1.X-v2.X)*(v1.X-v2.X) + (v1.Y-v2.Y)*(v1.Y-v2.Y));
+        return std::sqrtf((v1.X-v2.X)*(v1.X-v2.X) + (v1.Y-v2.Y)*(v1.Y-v2.Y));
     }
 };
 
