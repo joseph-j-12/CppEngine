@@ -13,8 +13,8 @@ public:
         Vec2D point;
         Vec2D normal;
         float depth;
-        GColliderComp* col1;
-        GColliderComp* col2;
+        GColliderComp* col1; //col1 is the object whose side is the intersecting axis
+        GColliderComp* col2; //col2 is the object whose point is inside the other object
     };
 
     enum ForceType{

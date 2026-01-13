@@ -41,20 +41,23 @@ int main() {
     auto* newObj = myScene.AddNewObject<GObject>();
     auto* newObj2 = myScene.AddNewObject<GObject>();
     newObj->transform.position = Vec2D(125,25);
-    newObj2->setPhysicsEnabled(true);
+    //newObj2->setPhysicsEnabled(true);
     newObj->setPhysicsEnabled(true);
     ColliderShapeTemplate shapetemplate1;
-    shapetemplate1.numPoints = 3;
-    shapetemplate1.points = (Vec2D*)malloc(3*sizeof(Vec2D));
+    shapetemplate1.numPoints = 4;
+    shapetemplate1.points = (Vec2D*)malloc(4*sizeof(Vec2D));
 
-    shapetemplate1.points[0].X = -45;
-    shapetemplate1.points[0].Y = -45;
+    shapetemplate1.points[0].X = -65;
+    shapetemplate1.points[0].Y = -65;
 
-    shapetemplate1.points[1].X = 0;
+    shapetemplate1.points[1].X = -45;
     shapetemplate1.points[1].Y = 45;
     
     shapetemplate1.points[2].X = 45;
-    shapetemplate1.points[2].Y = -45;
+    shapetemplate1.points[2].Y = 45;
+
+    shapetemplate1.points[3].X = 45;
+    shapetemplate1.points[3].Y = -45;
     
     auto* coll = newObj->CreateComponent<GColliderComp>(newObj, GColliderComp::ColliderType::Polygon, &shapetemplate1);
     auto* coll2 = newObj2->CreateComponent<GColliderComp>(newObj2, GColliderComp::ColliderType::Polygon, &shapetemplate1);
@@ -93,6 +96,7 @@ int main() {
         
         if (col.depth > 0)
         {
+            myScene.physics.HandleCollision(col);
             window.draw(line.data(), line.size(), sf::PrimitiveType::Lines);
             window.draw(shape2);
         }

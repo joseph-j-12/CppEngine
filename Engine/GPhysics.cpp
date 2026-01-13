@@ -116,6 +116,27 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
     return col;
 }
 
+void GPhysics::HandleCollision(Collision col)
+{
+    float multiplier = col.depth;
+    if (!col.col1->gobject->getPhysicsEnabled())
+    {
+        if (!col.col2->gobject->getPhysicsEnabled())
+        {
+            return;
+        }
+        multiplier *= 0.5f;
+    }
+    if(col.col1->gobject->getPhysicsEnabled())
+    {
+        col.col1->gobject->transform.position = col.col1->gobject->transform.position - col.normal*multiplier;
+    } 
+    if (col.col2->gobject->getPhysicsEnabled())
+    {
+        col.col2->gobject->transform.position = col.col2->gobject->transform.position + col.normal*multiplier;   
+    }
+}
+
 void GPhysics::AddImpulseAtLocation(GObject *const object, Vec2D location ,Vec2D force, ForceType ForceType)
 {
     Vec2D acc = force * (1/object->mass);
