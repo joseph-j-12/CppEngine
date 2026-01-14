@@ -18,7 +18,7 @@ void GPhysics::Tick(float DeltaTime)
     for (auto& obj : myScene->sceneObjects)
     {
         if (!obj->getPhysicsEnabled()) continue;
-        //obj->velocity = obj->velocity + Vec2D(0,-19.8)*DeltaTime;
+        obj->velocity = obj->velocity + Vec2D(0,-19.8)*DeltaTime;
         //std::cout << obj->velocity.Y << std::endl;
     }
 }
@@ -130,10 +130,14 @@ void GPhysics::HandleCollision(Collision col)
     if(col.col1->gobject->getPhysicsEnabled())
     {
         col.col1->gobject->transform.position = col.col1->gobject->transform.position - col.normal*multiplier;
+        //col.col1->gobject->velocity = col.col1->gobject->velocity - col.normal*25;
+        AddImpulseAtLocation(col.col1->gobject, col.point, col.normal*(-25), ForceType::Impulse);
     } 
     if (col.col2->gobject->getPhysicsEnabled())
     {
         col.col2->gobject->transform.position = col.col2->gobject->transform.position + col.normal*multiplier;   
+        col.col2->gobject->velocity = col.col2->gobject->velocity + col.normal*25;
+        AddImpulseAtLocation(col.col2->gobject, col.point, col.normal*25, ForceType::Impulse);
     }
 }
 

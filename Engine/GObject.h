@@ -25,7 +25,7 @@ class GObject{
         transform.gobject = this;
         angularVelocity = 0.f;
         mass = 1;
-        momentOfInertia = 25;
+        momentOfInertia = 950;
     }
 
     void Begin();
