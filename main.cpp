@@ -44,15 +44,16 @@ int main() {
     GScene myScene;
     auto* newObj = myScene.AddNewObject<GObject>();
     auto* newObj2 = myScene.AddNewObject<GObject>();
-    newObj->transform.position = Vec2D(0,125);
-    newObj->transform.rotation = 3.5f;
+    newObj->transform.position = Vec2D(0,225);
+    //newObj->transform.rotation = 3.5f;
     newObj2->transform.rotation = -0.5f;
     newObj2->transform.position = Vec2D(0,-50);
     //newObj2->setPhysicsEnabled(true);
     newObj->setPhysicsEnabled(true);
+    newObj->angularVelocity = 3;
     ColliderShapeTemplate shapetemplate1;
-    shapetemplate1.numPoints = 4;
-    shapetemplate1.points = (Vec2D*)malloc(4*sizeof(Vec2D));
+    shapetemplate1.numPoints = 5;
+    shapetemplate1.points = (Vec2D*)malloc(5*sizeof(Vec2D));
 
     shapetemplate1.points[0].X = -15;
     shapetemplate1.points[0].Y = -80;
@@ -65,6 +66,9 @@ int main() {
 
     shapetemplate1.points[3].X = 15;
     shapetemplate1.points[3].Y = -80;
+
+    shapetemplate1.points[4].X = 0;
+    shapetemplate1.points[4].Y = -100;
 
     ColliderShapeTemplate shapetemplate2;
     shapetemplate2.numPoints = 4;
@@ -91,7 +95,7 @@ int main() {
     while(window.isOpen())
     {
         auto start = std::chrono::steady_clock::now();
-        std::this_thread::sleep_for(std::chrono::milliseconds(25));
+        std::this_thread::sleep_for(std::chrono::milliseconds(8));
 
         sf::Vector2f pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         Vec2D posVec = Vec2D(pos.x, pos.y);
@@ -108,7 +112,8 @@ int main() {
         newObj->transform.calculateCosAndSine();
         //newObj->angularVelocity = 1.5;
         //newObj2->transform.position = posVec;
-        myScene.physics.Tick(duration.count() == 0 ? 0.00016 : 3*duration.count()/1000);
+
+        myScene.Tick_Physics(duration.count() == 0 ? 0.00016 : 3*duration.count()/1000);
 
         GPhysics::Collision col = myScene.physics.GetCollisionBetweenObjects(coll2, coll, &window);
 
@@ -121,7 +126,7 @@ int main() {
         // sf::Vertex(sf::Vector2f(colEndPoint.X, colEndPoint.Y), sf::Color::Red) // End point and color
         // };
         
-        if (col.depth > 0)
+        if (col.colliding)
         {
             myScene.physics.HandleCollision(col);
             //window.draw(line.data(), line.size(), sf::PrimitiveType::Lines);
@@ -140,7 +145,7 @@ int main() {
         // }
         auto end = std::chrono::steady_clock::now();
         duration = end - start;
-        std::cout << "fps:" << 1000/duration.count() << std::endl;
+        //std::cout << "fps:" << 1000/duration.count() << std::endl;
     
         window.display(); 
         

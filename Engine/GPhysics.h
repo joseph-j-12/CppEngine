@@ -6,6 +6,10 @@
 
 class GScene;
 class GColliderComp;
+
+//Physics class. Handles the collision detection and collision resolution of objects;
+//The physics enabled object should not be a child object. if it is a child object, 
+//its parent must be at origin and have zero rotation.
 class GPhysics
 {
 public:
@@ -15,6 +19,8 @@ public:
         float depth;
         GColliderComp* col1; //col1 is the object whose side is the intersecting axis
         GColliderComp* col2; //col2 is the object whose point is inside the other object
+
+        bool colliding;
     };
 
     enum ForceType{

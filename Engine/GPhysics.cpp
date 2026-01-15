@@ -6,6 +6,8 @@
 #include <iostream>
 #include <cmath>
 #include <array>
+
+
 GPhysics::GPhysics(GScene* scene)
 {
     myScene = scene;
@@ -28,6 +30,8 @@ void GPhysics::Begin()
 
 }
 
+
+//return the collision between two objects.
 GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GColliderComp *obj2, sf::RenderWindow* window)
 {
     //Separating axis theorem
@@ -76,13 +80,16 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
                     min_r2 = std::min(min_r2, proj);
                     max_r2 = std::max(max_r2, proj);
                 }
-                //std::cout << max_r2 << "-" << min_r2 << "-" << max_r1 << "-" << min_r1 << std::endl;
+                
+                //if not overlaping on any one axis, then the objects are not colliding
                 if (!(max_r2 >= min_r1 && max_r1 >= min_r2)) {
                     col.depth = -1;
+                    col.colliding = false;
                     return col;
                 }
                 
                 //calculate overlap and normal of overlap
+                //the collision normal will be the axis of least overlap
                 float ov = (std::min(max_r1, max_r2) - std::max(min_r1, min_r2));
                 if (ov < minOverlap)
                 {
@@ -96,10 +103,16 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
                     }
                 }
             }
-            //std::cout << "-----------" << std::endl;
         }
     }
-    //std::cout << "-----------" << std::endl;
+
+    //to find the point of collision. 
+    //the point is considered the one that has gotten most inside the other shape
+    //this is found by taking the projection of each point onto the normal of collision
+    //the point with least value will be the one inside the other (least as in could be negative as well)
+
+    //assume that origin is on the side thru which normal goes then points inside the shape will have negative projection
+    col.colliding = true;
     col.depth = minOverlap;
     col.normal = overlapNormal;
     float proj = INFINITY;
@@ -118,27 +131,33 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
 
 void GPhysics::HandleCollision(Collision col)
 {
-    float multiplier = col.depth;
     if (!col.col1->gobject->getPhysicsEnabled())
     {
         if (!col.col2->gobject->getPhysicsEnabled())
         {
             return;
         }
-        multiplier *= 0.5f;
+        else
+        {
+            float multiplier = col.col2->gobject->bounce * col.col1->gobject->bounce;
+            col.col2->gobject->transform.position = col.col2->gobject->transform.position + col.normal*col.depth;   
+            Vec2D normalVel = col.normal*Vec2D::DotProduct(col.normal, col.col2->gobject->velocity_at_point(col.point));
+            AddImpulseAtLocation(col.col2->gobject, col.point, -normalVel*multiplier, ForceType::Impulse);
+        }
     }
-    if(col.col1->gobject->getPhysicsEnabled())
+    else
     {
-        col.col1->gobject->transform.position = col.col1->gobject->transform.position - col.normal*multiplier;
-        //col.col1->gobject->velocity = col.col1->gobject->velocity - col.normal*25;
-        AddImpulseAtLocation(col.col1->gobject, col.point, col.normal*(-25), ForceType::Impulse);
-    } 
-    if (col.col2->gobject->getPhysicsEnabled())
-    {
-        col.col2->gobject->transform.position = col.col2->gobject->transform.position + col.normal*multiplier;   
-        col.col2->gobject->velocity = col.col2->gobject->velocity + col.normal*25;
-        AddImpulseAtLocation(col.col2->gobject, col.point, col.normal*25, ForceType::Impulse);
+        if (!col.col2->gobject->getPhysicsEnabled())
+        {
+            float multiplier = col.col2->gobject->bounce * col.col1->gobject->bounce;
+            col.col1->gobject->transform.position = col.col1->gobject->transform.position - col.normal*col.depth;   
+            Vec2D normalVel = col.normal*Vec2D::DotProduct(col.normal, col.col1->gobject->velocity_at_point(col.point));
+            AddImpulseAtLocation(col.col1->gobject, col.point, -normalVel*multiplier, ForceType::Impulse);
+        }
     }
+
+
+    
 }
 
 void GPhysics::AddImpulseAtLocation(GObject *const object, Vec2D location ,Vec2D force, ForceType ForceType)
@@ -147,7 +166,7 @@ void GPhysics::AddImpulseAtLocation(GObject *const object, Vec2D location ,Vec2D
     Vec2D diff = location - object->transform.myScenePosition();
     float torque = Vec2D::CrossProduct(diff, force);
     object->angularVelocity += torque/object->momentOfInertia;
-    std::cout << torque << std::endl;
+    //std::cout << torque << std::endl;
     object->velocity = object->velocity+acc;
 }
 

@@ -74,6 +74,11 @@ class Vec2D{
         return v1.X*v2.Y - v1.Y*v2.X;
     }
 
+    static Vec2D CrossProductZWithVector(float Z, const Vec2D &v1)
+    {
+        return Vec2D(-(Z*v1.Y), Z*v1.X);
+    }
+
     static Vec2D GetPerpendicular(const Vec2D &v1)
     {
         return Vec2D(-v1.Y, v1.X);

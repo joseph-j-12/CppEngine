@@ -52,6 +52,23 @@ class GTransform{
             return parent->local_to_scene(position + Vec2D(pos.X*CosandSin[0] - pos.Y*CosandSin[1], pos.X*CosandSin[1] + pos.Y*CosandSin[0]));
         }
     }
+
+    Vec2D scene_to_local(Vec2D worldPos)
+    {
+        if (parent != nullptr)
+        {
+            worldPos = parent->scene_to_local(worldPos);
+        }
+
+        worldPos = worldPos - position;
+
+        float c = CosandSin[0];
+        float s = CosandSin[1];
+
+        return Vec2D(worldPos.X * c + worldPos.Y * s, -worldPos.X*s + worldPos.Y*c);
+    }
+
+   
 };
 
 #endif

@@ -13,19 +13,26 @@ Every object will have a transform and the physicsEnabled flag.
 class GObject{
     public:
     GTransform transform;
-    Vec2D velocity;
+    Vec2D velocity; //world space velocity
     float angularVelocity;
+
+
+    //physics collision paramters
     float mass;
     float momentOfInertia;
-    //all the attached components
+    float bounce; //coefficient of restitution
+    float friction;
 
     GObject()
     {
         physicsEnabled = false;
         transform.gobject = this;
         angularVelocity = 0.f;
-        mass = 1;
-        momentOfInertia = 950;
+        mass = 2500;
+        momentOfInertia = 10000;
+        bounce = 0.8f;
+        friction = 0.4f;
+        
     }
 
     void Begin();
@@ -48,6 +55,17 @@ class GObject{
     
     std::vector<std::unique_ptr<GComponent>> myComponents; 
     
+    Vec2D velocity_at_point(Vec2D worldPos)
+    {
+        Vec2D vel = velocity;
+        Vec2D dir = worldPos - transform.local_to_scene(Vec2D(0,0));
+        //float length = dir.magnitude();
+        
+        Vec2D angular = Vec2D::CrossProductZWithVector(angularVelocity, dir);
+
+        return (vel+angular);
+    }
+
     private:
     bool physicsEnabled;
     bool colliderEnabled;
