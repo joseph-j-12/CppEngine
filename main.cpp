@@ -44,50 +44,55 @@ int main() {
     GScene myScene;
     auto* newObj = myScene.AddNewObject<GObject>();
     auto* newObj2 = myScene.AddNewObject<GObject>();
-    newObj->transform.position = Vec2D(0,225);
-    //newObj->transform.rotation = 3.5f;
-    newObj2->transform.rotation = -0.5f;
+
+    auto* newRB = myScene.AddNewObject<GObject>();
+
+    newRB->transform.position = Vec2D(0,100);
+    newObj->transform.position = Vec2D(0,150);
+    //newObj->transform.rotation = 0.7f;
+    newObj2->transform.rotation = -0.2f;
     newObj2->transform.position = Vec2D(0,-50);
+    newObj2->friction = 0.2f;
     //newObj2->setPhysicsEnabled(true);
     newObj->setPhysicsEnabled(true);
+    newRB->setPhysicsEnabled(true);
     newObj->angularVelocity = 3;
     ColliderShapeTemplate shapetemplate1;
-    shapetemplate1.numPoints = 5;
-    shapetemplate1.points = (Vec2D*)malloc(5*sizeof(Vec2D));
+    shapetemplate1.numPoints = 4;
+    shapetemplate1.points = (Vec2D*)malloc(4*sizeof(Vec2D));
 
     shapetemplate1.points[0].X = -15;
-    shapetemplate1.points[0].Y = -80;
+    shapetemplate1.points[0].Y = -15;
 
     shapetemplate1.points[1].X = -15;
-    shapetemplate1.points[1].Y = 80;
+    shapetemplate1.points[1].Y = 15;
     
     shapetemplate1.points[2].X = 15;
-    shapetemplate1.points[2].Y = 80;
+    shapetemplate1.points[2].Y = 15;
 
     shapetemplate1.points[3].X = 15;
-    shapetemplate1.points[3].Y = -80;
+    shapetemplate1.points[3].Y = -15;
 
-    shapetemplate1.points[4].X = 0;
-    shapetemplate1.points[4].Y = -100;
+    ColliderShapeTemplate staticObject;
+    staticObject.numPoints = 4;
+    staticObject.points = (Vec2D*)malloc(4*sizeof(Vec2D));
 
-    ColliderShapeTemplate shapetemplate2;
-    shapetemplate2.numPoints = 4;
-    shapetemplate2.points = (Vec2D*)malloc(4*sizeof(Vec2D));
+    staticObject.points[0].X = -65;
+    staticObject.points[0].Y = -25;
 
-    shapetemplate2.points[0].X = -65;
-    shapetemplate2.points[0].Y = -25;
-
-    shapetemplate2.points[1].X = -65;
-    shapetemplate2.points[1].Y = 25;
+    staticObject.points[1].X = -65;
+    staticObject.points[1].Y = 25;
     
-    shapetemplate2.points[2].X = 65;
-    shapetemplate2.points[2].Y = 25;
+    staticObject.points[2].X = 65;
+    staticObject.points[2].Y = 25;
 
-    shapetemplate2.points[3].X = 65;
-    shapetemplate2.points[3].Y = -25;
+    staticObject.points[3].X = 65;
+    staticObject.points[3].Y = -25;
     std::chrono::duration<double, std::milli> duration;
-    auto* coll = newObj->CreateComponent<GColliderComp>(newObj, GColliderComp::ColliderType::Polygon, &shapetemplate1);
-    auto* coll2 = newObj2->CreateComponent<GColliderComp>(newObj2, GColliderComp::ColliderType::Polygon, &shapetemplate2);
+    auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
+    auto* coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
+    auto* coll3rb = newRB->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
+    //auto* col3 = newObj2->CreateComponent<GColliderComp>(newObj2, GColliderComp::ColliderType::Polygon, &shapetemplate1);
     //newObj2->transform.position = Vec2D(-50,0);
 
     
@@ -119,12 +124,6 @@ int main() {
 
         Vec2D colScreenPos = convertWorldToScreen(col.point);
         shape2.setPosition(sf::Vector2f(colScreenPos.X-9, colScreenPos.Y-9));
-        // Vec2D colEndPoint = convertWorldToScreen((col.normal.getNormal()*col.depth + col.point));
-
-        // std::array<sf::Vertex, 2> line = {
-        // sf::Vertex(sf::Vector2f(colScreenPos.X, colScreenPos.Y), sf::Color::Red), // Start point and color
-        // sf::Vertex(sf::Vector2f(colEndPoint.X, colEndPoint.Y), sf::Color::Red) // End point and color
-        // };
         
         if (col.colliding)
         {
@@ -133,6 +132,21 @@ int main() {
             window.draw(shape2);
         }
 
+        col = myScene.physics.GetCollisionBetweenObjects(coll3rb, coll2, &window);
+        if (col.colliding)
+        {
+            myScene.physics.HandleCollision(col);
+            //window.draw(line.data(), line.size(), sf::PrimitiveType::Lines);
+            //window.draw(shape2);
+        }
+
+        col = myScene.physics.GetCollisionBetweenObjects(coll3rb, coll, &window);
+        if (col.colliding)
+        {
+            myScene.physics.HandleCollision(col);
+            //window.draw(line.data(), line.size(), sf::PrimitiveType::Lines);
+            //window.draw(shape2);
+        }
         //std::cout << col << std::endl;
         renderColliders(&myScene, &window);
         // if (col)
@@ -143,11 +157,12 @@ int main() {
         //     window.draw(r);
 
         // }
+        window.display(); 
         auto end = std::chrono::steady_clock::now();
         duration = end - start;
         //std::cout << "fps:" << 1000/duration.count() << std::endl;
     
-        window.display(); 
+        
         
     }
 

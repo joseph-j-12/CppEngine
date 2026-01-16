@@ -28,10 +28,10 @@ class GObject{
         physicsEnabled = false;
         transform.gobject = this;
         angularVelocity = 0.f;
-        mass = 2500;
-        momentOfInertia = 10000;
-        bounce = 0.8f;
-        friction = 0.4f;
+        mass = 300;
+        momentOfInertia = 30000;
+        bounce = 0.3f;
+        friction = 0.2f;
         
     }
 
@@ -43,7 +43,7 @@ class GObject{
 
     template<typename T, typename... Args> T* CreateComponent(Args&&... args)
     {
-        auto newComp = std::make_unique<T>(std::forward<Args>(args)...);
+        auto newComp = std::make_unique<T>(this, std::forward<Args>(args)...);
         T* ptr = newComp.get();
         myComponents.push_back(std::move(newComp));
 

@@ -20,6 +20,8 @@ class GTransform{
     float rotation; //local rotation
     Vec2D scale;
 
+    float prevRotation;
+
     GTransform* parent;
     
     GObject *gobject;
@@ -27,16 +29,23 @@ class GTransform{
     GTransform() : parent(nullptr), scale(1,1)
     {
         rotation = 0.f;
+        prevRotation = 0.1f;
         calculateCosAndSine();
     }
 
     void calculateCosAndSine()
     {
+        if (prevRotation == rotation) return;
+        prevRotation = rotation;
         CosandSin[0] = std::cos(rotation);
         CosandSin[1] = std::sin(rotation);
     }
     Vec2D myScenePosition()
     {
+        if (parent == nullptr)
+        {
+            return position;
+        } 
         calculateCosAndSine();
         return local_to_scene(Vec2D(0,0));
     }

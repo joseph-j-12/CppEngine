@@ -15,7 +15,7 @@ class GPhysics
 public:
     struct Collision{
         Vec2D point;
-        Vec2D normal;
+        Vec2D normal; //in the direction to push col2 out (col1 to col2)
         float depth;
         GColliderComp* col1; //col1 is the object whose side is the intersecting axis
         GColliderComp* col2; //col2 is the object whose point is inside the other object
@@ -35,13 +35,14 @@ public:
     Collision GetCollisionBetweenObjects(GColliderComp* obj1, GColliderComp* obj2, sf::RenderWindow* window);
     void HandleCollision(Collision col);
 
-    void AddImpulseAtLocation(GObject* const object, Vec2D location , Vec2D force, ForceType ForceType = GPhysics::ForceType::Force);
+    void AddImpulseAtLocation(GObject* const object, Vec2D location , Vec2D force);
+    void AddVelocityAtLocation(GObject* const object, Vec2D location , Vec2D velocity);
 
     private:
     
     GScene* myScene;
     void ApplyVelocities(float DeltaTime);
-
+    void Damping(float DeltaTime);
     
 
 };

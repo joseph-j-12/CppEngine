@@ -8,4 +8,5 @@
 #include "Engine/GComponent.h"
 #include "Engine/ColliderComp.h"
 #include "Engine/GPhysics.h"
+#include "Engine/GSpatialHash.h"
 #endif

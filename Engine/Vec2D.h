@@ -59,6 +59,11 @@ class Vec2D{
         return Vec2D(X*num, Y*num);
     }
 
+    Vec2D operator/(const float num)
+    {
+        return Vec2D(X/num, Y/num);
+    }
+
     Vec2D operator-()
     {
         return Vec2D(-X, -Y);
