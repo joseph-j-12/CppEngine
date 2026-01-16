@@ -30,8 +30,8 @@ class GObject{
         angularVelocity = 0.f;
         mass = 300;
         momentOfInertia = 30000;
-        bounce = 0.3f;
-        friction = 0.2f;
+        bounce = 0.1f;
+        friction = 0.8f;
         
     }
 

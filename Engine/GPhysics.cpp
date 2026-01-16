@@ -163,8 +163,8 @@ void GPhysics::HandleCollision(Collision col)
             float rxt = Vec2D::CrossProduct(r, tangent);
             float invMassTang = (1.f/col.col2->gobject->mass) + (rxt*rxt)/col.col2->gobject->momentOfInertia;
             float jt = Vec2D::DotProduct(vel_at_hit_point, tangent)/invMassTang;
-            float maxFric = avg_friction*j;
-            if (maxFric < 0) maxFric = -maxFric;
+            float maxFric = avg_friction*std::abs(j);
+            //if (maxFric < 0) maxFric = -maxFric;
             jt = std::clamp(jt, -maxFric, maxFric);
             // float vel_along_tangent = Vec2D::DotProduct(tangent, vel_at_hit_point);
             // if (vel_along_tangent > 0)
@@ -203,8 +203,8 @@ void GPhysics::HandleCollision(Collision col)
             float rxt = Vec2D::CrossProduct(r, tangent);
             float invMassTang = (1.f/col.col1->gobject->mass) + (rxt*rxt)/col.col1->gobject->momentOfInertia;
             float jt = Vec2D::DotProduct(vel_at_hit_point, tangent)/invMassTang;
-            float maxFric = avg_friction*j;
-            if (maxFric < 0) maxFric = -maxFric;
+            float maxFric = avg_friction*std::abs(j);
+            //if (maxFric < 0) maxFric = -maxFric;
             jt = std::clamp(jt, -maxFric, maxFric);
 
             // if (vel_along_tangent > 0)
@@ -265,8 +265,8 @@ void GPhysics::HandleCollision(Collision col)
             float jt = Vec2D::DotProduct(v21, tangent)/invMassTang;
 
             
-            float maxFric = avg_friction*j;
-            if (maxFric < 0) maxFric = -maxFric;
+            float maxFric = avg_friction*std::abs(j);
+            //if (maxFric < 0) maxFric = -maxFric;
 
             jt = std::clamp(jt, -maxFric, maxFric);
 

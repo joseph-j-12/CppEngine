@@ -47,16 +47,16 @@ int main() {
 
     auto* newRB = myScene.AddNewObject<GObject>();
 
-    newRB->transform.position = Vec2D(0,100);
+    newRB->transform.position = Vec2D(5,100);
     newObj->transform.position = Vec2D(0,150);
-    //newObj->transform.rotation = 0.7f;
-    newObj2->transform.rotation = -0.2f;
+    newObj->transform.rotation = 0.7f;
+    //newObj2->transform.rotation = -0.2f;
     newObj2->transform.position = Vec2D(0,-50);
     newObj2->friction = 0.2f;
     //newObj2->setPhysicsEnabled(true);
     newObj->setPhysicsEnabled(true);
     newRB->setPhysicsEnabled(true);
-    newObj->angularVelocity = 3;
+    //newObj->angularVelocity = 3;
     ColliderShapeTemplate shapetemplate1;
     shapetemplate1.numPoints = 4;
     shapetemplate1.points = (Vec2D*)malloc(4*sizeof(Vec2D));
