@@ -294,7 +294,7 @@ void GPhysics::AddImpulseAtLocation(GObject *const object, Vec2D location ,Vec2D
     Vec2D diff = location - object->transform.myScenePosition();
     float torque = Vec2D::CrossProduct(diff, force);
     object->angularVelocity += torque/object->momentOfInertia;
-    std::cout << acc.magnitude() << std::endl;
+    //std::cout << acc.magnitude() << std::endl;
     object->velocity = object->velocity+acc;
 }
 

@@ -19,24 +19,7 @@ int screenH = 480;
 int main() {
 
     sf::RenderWindow window(sf::VideoMode(640,480),"app");
-    Vec2D v = Vec2D(2,3.5f) + -Vec2D(4.5f,1);
-    v.normalize();
-    v = Vec2D(2,3);
 
-    GTransform t;
-    GTransform t2;
-    GTransform moon;
-    t2.position = Vec2D(250,250);
-    t.position = Vec2D(100,0);
-    moon.position = Vec2D(25,0);
-    t2.rotation = 3.1415f;
-    t.parent = &t2;
-    moon.parent = &t;
-
-
-    Vec2D v2 = t.local_to_scene(Vec2D());
-
-    std::cout << v2.X << " - " << v2.Y << std::endl;
     sf::CircleShape shape1(25);
     sf::CircleShape shape2(9);
     sf::CircleShape shape3(4);
@@ -47,16 +30,19 @@ int main() {
 
     auto* newRB = myScene.AddNewObject<GObject>();
 
-    newRB->transform.position = Vec2D(5,100);
+    newRB->transform.position = Vec2D(-300,150);
     newObj->transform.position = Vec2D(0,150);
-    newObj->transform.rotation = 0.7f;
+
+    newRB->velocity = Vec2D(100, 0);
+
+    //newObj->transform.rotation = 0.7f;
     //newObj2->transform.rotation = -0.2f;
     newObj2->transform.position = Vec2D(0,-50);
     newObj2->friction = 0.2f;
     //newObj2->setPhysicsEnabled(true);
     newObj->setPhysicsEnabled(true);
     newRB->setPhysicsEnabled(true);
-    //newObj->angularVelocity = 3;
+    newRB->angularVelocity = 3;
     ColliderShapeTemplate shapetemplate1;
     shapetemplate1.numPoints = 4;
     shapetemplate1.points = (Vec2D*)malloc(4*sizeof(Vec2D));
@@ -100,7 +86,7 @@ int main() {
     while(window.isOpen())
     {
         auto start = std::chrono::steady_clock::now();
-        std::this_thread::sleep_for(std::chrono::milliseconds(8));
+        std::this_thread::sleep_for(std::chrono::milliseconds(16));
 
         sf::Vector2f pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         Vec2D posVec = Vec2D(pos.x, pos.y);
@@ -122,14 +108,14 @@ int main() {
 
         GPhysics::Collision col = myScene.physics.GetCollisionBetweenObjects(coll2, coll, &window);
 
-        Vec2D colScreenPos = convertWorldToScreen(col.point);
-        shape2.setPosition(sf::Vector2f(colScreenPos.X-9, colScreenPos.Y-9));
+        // Vec2D colScreenPos = convertWorldToScreen(col.point);
+        // shape2.setPosition(sf::Vector2f(colScreenPos.X-9, colScreenPos.Y-9));
         
         if (col.colliding)
         {
             myScene.physics.HandleCollision(col);
             //window.draw(line.data(), line.size(), sf::PrimitiveType::Lines);
-            window.draw(shape2);
+            //window.draw(shape2);
         }
 
         col = myScene.physics.GetCollisionBetweenObjects(coll3rb, coll2, &window);
@@ -160,7 +146,7 @@ int main() {
         window.display(); 
         auto end = std::chrono::steady_clock::now();
         duration = end - start;
-        //std::cout << "fps:" << 1000/duration.count() << std::endl;
+        std::cout << "fps:" << 1000/duration.count() << std::endl;
     
         
         
