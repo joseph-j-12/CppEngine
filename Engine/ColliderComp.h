@@ -27,7 +27,9 @@ class GColliderComp : public GComponent{
     GColliderComp(GObject* myParentObject, ColliderType col, ColliderShapeTemplate *shape);
 
     void CalculateBoundingBox();
-    
+    void Begin() override;
+    void Tick(float DeltaTime) override;
+
     ColliderShapeTemplate* myShape;
     float circleRadius;
     ColliderType myColliderType;

@@ -3,10 +3,10 @@
 #include "Vec2D.h"
 #include "GTransform.h"
 #include "SFML/Graphics.hpp"
+#include "GSpatialHash.h"
 
 class GScene;
 class GColliderComp;
-
 //Physics class. Handles the collision detection and collision resolution of objects;
 //The physics enabled object should not be a child object. if it is a child object, 
 //its parent must be at origin and have zero rotation.
@@ -32,17 +32,26 @@ public:
     void Tick(float DeltaTime);
     void Begin();
 
-    Collision GetCollisionBetweenObjects(GColliderComp* obj1, GColliderComp* obj2, sf::RenderWindow* window);
+    Collision GetCollisionBetweenObjects(GColliderComp* obj1, GColliderComp* obj2);
     void HandleCollision(Collision col);
 
     void AddImpulseAtLocation(GObject* const object, Vec2D location , Vec2D force);
     void AddVelocityAtLocation(GObject* const object, Vec2D location , Vec2D velocity);
 
+    GColliderComp* gColliders[MAX_COLLIDERS];
+    uint16_t gColliderCount = 0;
+
+    uint16_t registerCollider(GColliderComp* col);
+
+    GSpatialHash grid;
     private:
     
     GScene* myScene;
     void ApplyVelocities(float DeltaTime);
     void Damping(float DeltaTime);
+
+    void UpdateSpatialHashGrid();
+    void BroadPhase();
     
 
 };

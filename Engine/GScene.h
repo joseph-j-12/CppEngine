@@ -10,7 +10,6 @@
 Scene contains all the objects. It runs the tick for all the objects and components. 
 It connects rigidbodies and physics and also handles searching for children of an object
 */
-
 class GScene{
     public :
     std::vector<std::unique_ptr<GObject>> sceneObjects;
@@ -27,7 +26,7 @@ class GScene{
 
     template<typename T, typename... Args> T* AddNewObject(Args&&... args)
     {
-        auto newObj = std::make_unique<T>(std::forward<Args>(args)...);
+        auto newObj = std::make_unique<T>(this, std::forward<Args>(args)...);
         T* ptr = newObj.get();
         sceneObjects.push_back(std::move(newObj));
         return ptr;

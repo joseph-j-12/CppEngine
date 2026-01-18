@@ -10,20 +10,21 @@
 An object that will exist in a scene
 Every object will have a transform and the physicsEnabled flag.
 */
+class GScene;
 class GObject{
     public:
     GTransform transform;
     Vec2D velocity; //world space velocity
     float angularVelocity;
 
-
+    GScene* myScene;
     //physics collision paramters
     float mass;
     float momentOfInertia;
     float bounce; //coefficient of restitution
     float friction;
 
-    GObject()
+    GObject(GScene* scene)
     {
         physicsEnabled = false;
         transform.gobject = this;
@@ -32,6 +33,7 @@ class GObject{
         momentOfInertia = 300;
         bounce = 0.1f;
         friction = 0.1f;
+        myScene = scene;
         
     }
 

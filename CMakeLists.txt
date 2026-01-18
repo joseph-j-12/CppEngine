@@ -7,6 +7,7 @@ set(SOURCES
     Engine/GScene.cpp
     Engine/ColliderComp.cpp
     Engine/GObject.cpp
+    Engine/GSpatialHash.cpp
 )
 
 add_executable(run ${SOURCES}) #

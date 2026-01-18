@@ -8,6 +8,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/run.dir/Engine/GPhysics.cpp.o.d"
   "CMakeFiles/run.dir/Engine/GScene.cpp.o"
   "CMakeFiles/run.dir/Engine/GScene.cpp.o.d"
+  "CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o"
+  "CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o.d"
   "CMakeFiles/run.dir/main.cpp.o"
   "CMakeFiles/run.dir/main.cpp.o.d"
   "run"

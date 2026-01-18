@@ -25,39 +25,39 @@ int main() {
     sf::CircleShape shape3(4);
 
     GScene myScene;
-    auto* newObj = myScene.AddNewObject<GObject>();
+    //auto* newObj = myScene.AddNewObject<GObject>();
     auto* newObj2 = myScene.AddNewObject<GObject>();
 
-    auto* newRB = myScene.AddNewObject<GObject>();
+    //auto* newRB = myScene.AddNewObject<GObject>();
 
-    newRB->transform.position = Vec2D(-300,150);
-    newObj->transform.position = Vec2D(0,150);
+    //newRB->transform.position = Vec2D(-300,150);
+    //newObj->transform.position = Vec2D(0,150);
 
-    newRB->velocity = Vec2D(100, 0);
+    //newRB->velocity = Vec2D(100, 0);
 
     //newObj->transform.rotation = 0.7f;
     //newObj2->transform.rotation = -0.2f;
     newObj2->transform.position = Vec2D(0,-50);
     newObj2->friction = 0.2f;
     //newObj2->setPhysicsEnabled(true);
-    newObj->setPhysicsEnabled(true);
-    newRB->setPhysicsEnabled(true);
-    newRB->angularVelocity = 3;
+    //newObj->setPhysicsEnabled(true);
+    //newRB->setPhysicsEnabled(true);
+    //newRB->angularVelocity = 3;
     ColliderShapeTemplate shapetemplate1;
     shapetemplate1.numPoints = 4;
     shapetemplate1.points = (Vec2D*)malloc(4*sizeof(Vec2D));
 
-    shapetemplate1.points[0].X = -15;
-    shapetemplate1.points[0].Y = -15;
+    shapetemplate1.points[0].X = -10;
+    shapetemplate1.points[0].Y = -10;
 
-    shapetemplate1.points[1].X = -15;
-    shapetemplate1.points[1].Y = 15;
+    shapetemplate1.points[1].X = -10;
+    shapetemplate1.points[1].Y = 10;
     
-    shapetemplate1.points[2].X = 15;
-    shapetemplate1.points[2].Y = 15;
+    shapetemplate1.points[2].X = 10;
+    shapetemplate1.points[2].Y = 10;
 
-    shapetemplate1.points[3].X = 15;
-    shapetemplate1.points[3].Y = -15;
+    shapetemplate1.points[3].X = 10;
+    shapetemplate1.points[3].Y = -10;
 
     ColliderShapeTemplate staticObject;
     staticObject.numPoints = 4;
@@ -75,18 +75,38 @@ int main() {
     staticObject.points[3].X = 65;
     staticObject.points[3].Y = -25;
     std::chrono::duration<double, std::milli> duration;
-    auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
+    //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
     auto* coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-    auto* coll3rb = newRB->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
+    //auto* coll3rb = newRB->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
     //auto* col3 = newObj2->CreateComponent<GColliderComp>(newObj2, GColliderComp::ColliderType::Polygon, &shapetemplate1);
     //newObj2->transform.position = Vec2D(-50,0);
 
+    for (int i = 0;i < 5; i++)
+    {
+        for (int j  = 0; j < 5; j++)
+        {
+            auto* newObj = myScene.AddNewObject<GObject>();
+            auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
+
+            newObj->setPhysicsEnabled(true);
+            newObj->transform.position = Vec2D(-50+i*20.5f,-10+j*20);
+        }
+    }
+
+    auto* newObj = myScene.AddNewObject<GObject>();
+    auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
+
+    newObj->setPhysicsEnabled(true);
+    newObj->transform.position = Vec2D(-300,60);
+    newObj->velocity = Vec2D(250,0);
+    newObj->mass = 300;
+    newObj->momentOfInertia = 3000;
     
-    
+    myScene.Begin();
     while(window.isOpen())
     {
         auto start = std::chrono::steady_clock::now();
-        std::this_thread::sleep_for(std::chrono::milliseconds(16));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(16));
 
         sf::Vector2f pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         Vec2D posVec = Vec2D(pos.x, pos.y);
@@ -100,49 +120,14 @@ int main() {
             if (event.type == sf::Event::Closed) window.close();
         }
         window.clear();
-        newObj->transform.calculateCosAndSine();
+        //newObj->transform.calculateCosAndSine();
         //newObj->angularVelocity = 1.5;
         //newObj2->transform.position = posVec;
 
         myScene.Tick_Physics(duration.count() == 0 ? 0.00016 : 3*duration.count()/1000);
 
-        GPhysics::Collision col = myScene.physics.GetCollisionBetweenObjects(coll2, coll, &window);
-
-        // Vec2D colScreenPos = convertWorldToScreen(col.point);
-        // shape2.setPosition(sf::Vector2f(colScreenPos.X-9, colScreenPos.Y-9));
-        
-        if (col.colliding)
-        {
-            myScene.physics.HandleCollision(col);
-            //window.draw(line.data(), line.size(), sf::PrimitiveType::Lines);
-            //window.draw(shape2);
-        }
-
-        col = myScene.physics.GetCollisionBetweenObjects(coll3rb, coll2, &window);
-        if (col.colliding)
-        {
-            myScene.physics.HandleCollision(col);
-            //window.draw(line.data(), line.size(), sf::PrimitiveType::Lines);
-            //window.draw(shape2);
-        }
-
-        col = myScene.physics.GetCollisionBetweenObjects(coll3rb, coll, &window);
-        if (col.colliding)
-        {
-            myScene.physics.HandleCollision(col);
-            //window.draw(line.data(), line.size(), sf::PrimitiveType::Lines);
-            //window.draw(shape2);
-        }
-        //std::cout << col << std::endl;
         renderColliders(&myScene, &window);
-        // if (col)
-        // {
-        //     sf::RectangleShape r;
-        //     r.setPosition(0,0);
-        //     r.setSize(sf::Vector2(25.f,25.f));
-        //     window.draw(r);
-
-        // }
+      
         window.display(); 
         auto end = std::chrono::steady_clock::now();
         duration = end - start;

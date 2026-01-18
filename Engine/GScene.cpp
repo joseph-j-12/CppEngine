@@ -7,7 +7,13 @@ GScene::GScene() : physics(this)
 
 void GScene::Begin()
 {
-
+    for (auto& obj : sceneObjects)
+    {
+        for (auto& comp : obj->myComponents)
+        {
+            comp->Begin();
+        }        
+    }
 }
 
 

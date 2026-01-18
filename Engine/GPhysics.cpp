@@ -3,12 +3,13 @@
 #include "GScene.h"
 #include "GObject.h"
 #include "ColliderComp.h"
+#include "GSpatialHash.h"
 #include <iostream>
 #include <cmath>
 #include <array>
 
 
-GPhysics::GPhysics(GScene* scene)
+GPhysics::GPhysics(GScene* scene) : grid()
 {
     myScene = scene;
 }
@@ -24,16 +25,57 @@ void GPhysics::Tick(float DeltaTime)
         //std::cout << obj->velocity.Y << std::endl;
     }
     Damping(DeltaTime);
+    UpdateSpatialHashGrid();
+    BroadPhase();
 }
+
 
 void GPhysics::Begin()
 {
 
 }
 
+void GPhysics::UpdateSpatialHashGrid()
+{
+    grid.Clear();
+    for (int i = 0; i < gColliderCount; i++)
+    {
+        //uint16_t a = 8;
+        grid.InsertCollider(gColliders[i], i);
+        //std::cout << i << std::endl;
+    }
+}
+
+void GPhysics::BroadPhase()
+{
+    for (int b = 0; b < MAX_BUCKETS; b++)
+    {
+        for (int i = grid.bucketHead[b]; i != -1; i = grid.entries[i].next)
+        {
+            for (int j = grid.entries[i].next; j != -1; j = grid.entries[j].next)
+            {
+                //std::cout << j << std::endl;
+                uint16_t A = grid.entries[i].colliderIndex;
+                uint16_t B = grid.entries[j].colliderIndex;
+
+                //std::cout << A << "-" << B << std::endl;
+                if (A != B)
+                {
+                    Collision col = GetCollisionBetweenObjects(gColliders[A], gColliders[B]);
+
+                    if (col.colliding)
+                    {
+                        HandleCollision(col);
+                    }
+                    //GetColl(gColliders[A], gColliders[B]);
+                }
+            }
+        }
+    }
+}
 
 //return the collision between two objects.
-GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GColliderComp *obj2, sf::RenderWindow* window)
+GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GColliderComp *obj2)
 {
     //Separating axis theorem
     GColliderComp* o1 = obj1;  
@@ -308,6 +350,16 @@ void GPhysics::AddVelocityAtLocation(GObject *const object, Vec2D location ,Vec2
     object->velocity = object->velocity+velocity;
 }
 
+uint16_t GPhysics::registerCollider(GColliderComp *col)
+{
+    if (gColliderCount > MAX_COLLIDERS)
+        return UINT16_MAX;
+
+    gColliders[gColliderCount] = col;
+    gColliderCount++;
+    //std::cout << gColliderCount << std::endl;
+    return 0;
+}
 
 void GPhysics::ApplyVelocities(float DeltaTime)
 {

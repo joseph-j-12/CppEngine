@@ -225,6 +225,30 @@ Engine/GScene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GScene.cpp.s
 .PHONY : Engine/GScene.cpp.s
 
+Engine/GSpatialHash.o: Engine/GSpatialHash.cpp.o
+.PHONY : Engine/GSpatialHash.o
+
+# target to build an object file
+Engine/GSpatialHash.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o
+.PHONY : Engine/GSpatialHash.cpp.o
+
+Engine/GSpatialHash.i: Engine/GSpatialHash.cpp.i
+.PHONY : Engine/GSpatialHash.i
+
+# target to preprocess a source file
+Engine/GSpatialHash.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GSpatialHash.cpp.i
+.PHONY : Engine/GSpatialHash.cpp.i
+
+Engine/GSpatialHash.s: Engine/GSpatialHash.cpp.s
+.PHONY : Engine/GSpatialHash.s
+
+# target to generate assembly for a file
+Engine/GSpatialHash.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GSpatialHash.cpp.s
+.PHONY : Engine/GSpatialHash.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -270,6 +294,9 @@ help:
 	@echo "... Engine/GScene.o"
 	@echo "... Engine/GScene.i"
 	@echo "... Engine/GScene.s"
+	@echo "... Engine/GSpatialHash.o"
+	@echo "... Engine/GSpatialHash.i"
+	@echo "... Engine/GSpatialHash.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
