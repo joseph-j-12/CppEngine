@@ -23,10 +23,10 @@ class GColliderComp : public GComponent{
         Polygon
     };
 
-    GColliderComp(GObject* myParentObject, ColliderType col);
+    GColliderComp(GObject* myParentObject, ColliderType col, float radius);
     GColliderComp(GObject* myParentObject, ColliderType col, ColliderShapeTemplate *shape);
 
-    void CalculateBoundingBox();
+    bool CalculateBoundingBox();
     void Begin() override;
     void Tick(float DeltaTime) override;
 

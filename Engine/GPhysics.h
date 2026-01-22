@@ -2,7 +2,7 @@
 #define HEADER_GPhysics
 #include "Vec2D.h"
 #include "GTransform.h"
-#include "SFML/Graphics.hpp"
+//#include "SFML/Graphics.hpp"
 #include "GSpatialHash.h"
 
 class GScene;

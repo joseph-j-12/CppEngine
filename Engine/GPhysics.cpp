@@ -6,7 +6,8 @@
 #include "GSpatialHash.h"
 #include <iostream>
 #include <cmath>
-#include <array>
+//#include <array>
+#include <algorithm>
 
 
 GPhysics::GPhysics(GScene* scene) : grid()
@@ -25,8 +26,11 @@ void GPhysics::Tick(float DeltaTime)
         //std::cout << obj->velocity.Y << std::endl;
     }
     Damping(DeltaTime);
+    //std::cout << "test1" << std::endl;
     UpdateSpatialHashGrid();
+    //std::cout << "test2" << std::endl;
     BroadPhase();
+    
 }
 
 
@@ -105,7 +109,6 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
 
                 Vec2D axis = Vec2D::GetPerpendicular(o1->gobject->transform.local_to_scene(o1->myShape->points[k])-o1->gobject->transform.local_to_scene(o1->myShape->points[j])).getNormal();
                 
-
                 //finding projection of 1st shape
                 float min_r1 = INFINITY; float max_r1 = -INFINITY;
                 for (int p = 0; p < o1->myShape->numPoints; p++)
@@ -117,11 +120,29 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
                 
                 //2nd shape
                 float min_r2 = INFINITY; float max_r2 = -INFINITY;
-                for (int p = 0; p < o2->myShape->numPoints; p++)
+                if (o2->myColliderType == GColliderComp::Polygon)
                 {
-                    float proj = Vec2D::DotProduct(axis, o2->gobject->transform.local_to_scene(o2->myShape->points[p]));
-                    min_r2 = std::min(min_r2, proj);
-                    max_r2 = std::max(max_r2, proj);
+                    for (int p = 0; p < o2->myShape->numPoints; p++)
+                    {
+                        float proj = Vec2D::DotProduct(axis, o2->gobject->transform.local_to_scene(o2->myShape->points[p]));
+                        min_r2 = std::min(min_r2, proj);
+                        max_r2 = std::max(max_r2, proj);
+                    }
+                }
+
+                //if one of the colliders is a circle
+                else if (o2->myColliderType == GColliderComp::Circle)
+                {
+                    //Vec2D side1 = o2->gobject->transform.myScenePosition() - axis*o2->circleRadius;
+                    //Vec2D side2 = o2->gobject->transform.myScenePosition() + axis*o2->circleRadius;
+
+                    //float proj1 = Vec2D::DotProduct(axis, side1);
+                    //float proj2 = Vec2D::DotProduct(axis, side2);
+
+                    float centerproj = Vec2D::DotProduct(axis, o2->gobject->transform.myScenePosition());
+
+                    min_r2 = centerproj - o2->circleRadius;//std::min(min_r2, std::min(proj1,proj2));
+                    max_r2 = centerproj + o2->circleRadius;//std::max(max_r2, std::max(proj1,proj2));
                 }
                 
                 //if not overlaping on any one axis, then the objects are not colliding
@@ -140,15 +161,95 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
                     overlapNormal = axis;
                     object_ther_than_axis = o2;
                     object_that_is_axis = o1;
-                    if (Vec2D::DotProduct(overlapNormal, (o2->gobject->transform.local_to_scene(Vec2D())-o1->gobject->transform.local_to_scene(Vec2D()))) < 0)
+                    if (Vec2D::DotProduct(overlapNormal, (o2->gobject->transform.myScenePosition()-o1->gobject->transform.myScenePosition())) < 0)
                     {
                         overlapNormal = -overlapNormal;
+                    }
+                    if (o2->myColliderType == GColliderComp::ColliderType::Circle)
+                    {
+                        col.point = o2->gobject->transform.myScenePosition() - axis*o2->circleRadius;
                     }
                 }
             }
         }
-    }
+        else if (o1->myColliderType == GColliderComp::ColliderType::Circle)
+        {
+            if (o2->myColliderType == GColliderComp::ColliderType::Polygon)
+            {
+                Vec2D closest;
+                float minDist = INFINITY;
+                for (int j = 0; j < o2->myShape->numPoints; j++)
+                {
+                    Vec2D point = o2->gobject->transform.local_to_scene(o2->myShape->points[j]);
+                    float dist = (point-o1->gobject->transform.position).magnitude();
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        closest = point;
+                    }
+                }
+                Vec2D axis = (closest - o1->gobject->transform.position).getNormal();
+                
+                float centerproj = Vec2D::DotProduct(axis, o1->gobject->transform.myScenePosition());
+                //float min_r1 = INFINITY; float max_r1 = -INFINITY;
+                float min_r1 = centerproj - o1->circleRadius;
+                float max_r1 = centerproj + o1->circleRadius;
 
+                //2nd shape
+                float min_r2 = INFINITY; float max_r2 = -INFINITY;
+                for (int p = 0; p < o2->myShape->numPoints; p++)
+                {
+                    float proj = Vec2D::DotProduct(axis, o2->gobject->transform.local_to_scene(o2->myShape->points[p]));
+                    min_r2 = std::min(min_r2, proj);
+                    max_r2 = std::max(max_r2, proj);
+                }
+
+                if (!(max_r2 >= min_r1 && max_r1 >= min_r2)) {
+                    col.depth = -1;
+                    col.colliding = false;
+                    return col;
+                }
+
+                float ov = (std::min(max_r1, max_r2) - std::max(min_r1, min_r2));
+                if (ov < minOverlap && minDist < o1->circleRadius)
+                {
+                    // minOverlap = ov;
+                    // overlapNormal = axis;
+                    // object_ther_than_axis = o2;
+                    // object_that_is_axis = o1;
+                    // col.point = closest;
+                    // if (Vec2D::DotProduct(overlapNormal, (closest-o1->gobject->transform.myScenePosition())) < 0)
+                    // {
+                    //     overlapNormal = -overlapNormal;
+                    // }
+                }
+            }
+
+            else if (o2->myColliderType == GColliderComp::ColliderType::Circle)
+            {
+                Vec2D dir = o2->gobject->transform.myScenePosition() - o1->gobject->transform.myScenePosition();
+
+                float dist = dir.magnitude();
+
+                if (dist < o2->circleRadius + o1->circleRadius)
+                {
+                    col.colliding = true;
+                    col.normal = dir.getNormal();
+                    col.col1 = o1;
+                    col.col2 = o2;
+                    col.depth = o2->circleRadius + o1->circleRadius - dist;
+                    col.point = o1->gobject->transform.myScenePosition() + dir * (o1->circleRadius/dist);
+                    return col;
+                }
+                else
+                {
+                    col.colliding = false;
+                    return col;
+                }
+            }
+        }
+    }
+    //std::cout << "yes" << std::endl;
     //to find the point of collision. 
     //the point is considered the one that has gotten most inside the other shape
     //this is found by taking the projection of each point onto the normal of collision
@@ -158,17 +259,44 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
     col.colliding = true;
     col.depth = minOverlap;
     col.normal = overlapNormal;
+    //std::cout << overlapNormal.X << "-" << overlapNormal.Y << std::endl;
     float proj = INFINITY;
-    for (int i = 0; i < object_ther_than_axis->myShape->numPoints; i++)
+    if (object_ther_than_axis->myColliderType == GColliderComp::ColliderType::Polygon && object_that_is_axis->myColliderType == GColliderComp::ColliderType::Polygon)
     {
-        float t = Vec2D::DotProduct(col.normal, object_ther_than_axis->gobject->transform.local_to_scene(object_ther_than_axis->myShape->points[i]));
-        if (t<proj) {
-            proj = t; 
-            col.point = object_ther_than_axis->gobject->transform.local_to_scene(object_ther_than_axis->myShape->points[i]);
+        for (int i = 0; i < object_ther_than_axis->myShape->numPoints; i++)
+        {
+            float t = Vec2D::DotProduct(col.normal, object_ther_than_axis->gobject->transform.local_to_scene(object_ther_than_axis->myShape->points[i]));
+            if (t<proj) {
+                proj = t; 
+                col.point = object_ther_than_axis->gobject->transform.local_to_scene(object_ther_than_axis->myShape->points[i]);
+            }
         }
     }
+    // else if (object_ther_than_axis->myColliderType == GColliderComp::ColliderType::Circle)
+    // {
+    //     if (object_that_is_axis->myColliderType == GColliderComp::ColliderType::Polygon)
+    //     {
+    //         Vec2D normal = col.normal;
+    //         float minDist = INFINITY;
+    //         Vec2D point = object_ther_than_axis->gobject->transform.position + col.normal*object_ther_than_axis->circleRadius;
+    //         Vec2D circleOrigin = object_ther_than_axis->gobject->transform.myScenePosition();
+    //         for (int i = 0; i < object_that_is_axis->myShape->numPoints; i++)
+    //         {
+    //             Vec2D colpt = object_that_is_axis->gobject->transform.local_to_scene(object_that_is_axis->myShape->points[i]);
+    //             float dist = Vec2D::Distance(circleOrigin, colpt);
+    //             if (dist < object_ther_than_axis->circleRadius)
+    //             {
+    //                 minDist = dist;
+    //                 col.normal = circleOrigin - colpt;
+    //                 col.depth = object_ther_than_axis->circleRadius - dist;
+    //             }
+    //         }
+    //         col.normal.normalize();
+    //     }
+    // }
     col.col1 = object_that_is_axis;
     col.col2 = object_ther_than_axis; //other_than_axis. i made a type now i dont want to change
+
     return col;
 }
 

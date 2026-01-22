@@ -4,9 +4,9 @@
 //#include "GScene.h"
 //#include "GPhysics.h"
 
-constexpr int MAX_COLLIDERS = 256;
-constexpr int MAX_CELLS_PER_COLLIDER = 4;
-constexpr int MAX_BUCKETS = 512;
+constexpr int MAX_COLLIDERS = 25600;
+constexpr int MAX_CELLS_PER_COLLIDER = 15;
+constexpr int MAX_BUCKETS = 5120;
 constexpr int MAX_ENTRIES = MAX_COLLIDERS * MAX_CELLS_PER_COLLIDER;
 constexpr float CELL_SIZE = 100.0f; 
 class GScene;
@@ -15,6 +15,9 @@ class GColliderComp;
 /*
 Spatial hashing for faster collision detection
 Uses fixed arrays instead of any other data type to avoid memory fragmentation
+Uses a linked list like approach for checking collision for only nearby objects
+
+
 */
 class GSpatialHash
 {

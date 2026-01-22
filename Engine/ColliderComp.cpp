@@ -2,10 +2,11 @@
 #include "GObject.h"
 #include "GScene.h"
 #include "GPhysics.h"
-
-GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col) : GComponent(myParentObject)
+#include <iostream>
+GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, float radius) : GComponent(myParentObject)
 {
     myColliderType = col;
+    circleRadius = radius;
 }
 
 GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, ColliderShapeTemplate *shape) : GComponent(myParentObject)
@@ -14,17 +15,18 @@ GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, Collider
     myColliderType = col;
 }
 
-void GColliderComp::CalculateBoundingBox()
+bool GColliderComp::CalculateBoundingBox()
 {
-    if (gobject == nullptr){ return;}
+    //std::cout << "bound" << std::endl;
+    if (gobject == nullptr){ return false;}
     gobject->transform.calculateCosAndSine();
-    float maxX = gobject->transform.local_to_scene(myShape->points[0]).X; 
-    float minX = gobject->transform.local_to_scene(myShape->points[0]).X; 
-    float maxY = gobject->transform.local_to_scene(myShape->points[0]).Y; 
-    float minY = gobject->transform.local_to_scene(myShape->points[0]).Y;
-
+    
     if (myColliderType == ColliderType::Polygon)
     {
+        float maxX = gobject->transform.local_to_scene(myShape->points[0]).X; 
+        float minX = gobject->transform.local_to_scene(myShape->points[0]).X; 
+        float maxY = gobject->transform.local_to_scene(myShape->points[0]).Y; 
+        float minY = gobject->transform.local_to_scene(myShape->points[0]).Y;
         for (int i = 0; i < myShape->numPoints; i++)
         {
             Vec2D transformedPoint = gobject->transform.local_to_scene(myShape->points[i]);
@@ -36,7 +38,16 @@ void GColliderComp::CalculateBoundingBox()
         }
         boundingBoxMax = Vec2D(maxX, maxY);
         boundingBoxMin = Vec2D(minX, minY);
+        return true;
     }
+    if (myColliderType == ColliderType::Circle)
+    {
+        boundingBoxMax = Vec2D(gobject->transform.position.X + circleRadius, gobject->transform.position.Y + circleRadius);
+        boundingBoxMin = Vec2D(gobject->transform.position.X - circleRadius, gobject->transform.position.Y - circleRadius);
+        return true;
+    }
+    
+    return false;
     
 }
 

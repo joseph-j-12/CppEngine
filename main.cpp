@@ -1,7 +1,6 @@
 #include <iostream>
 #include "BaseEngine.h"
 #include "SFML/Graphics.hpp"
-#include <thread>
 #include <array>
 
 //to measure fps
@@ -20,29 +19,9 @@ int main() {
 
     sf::RenderWindow window(sf::VideoMode(640,480),"app");
 
-    sf::CircleShape shape1(25);
-    sf::CircleShape shape2(9);
-    sf::CircleShape shape3(4);
-
     GScene myScene;
-    //auto* newObj = myScene.AddNewObject<GObject>();
-    auto* newObj2 = myScene.AddNewObject<GObject>();
+    
 
-    //auto* newRB = myScene.AddNewObject<GObject>();
-
-    //newRB->transform.position = Vec2D(-300,150);
-    //newObj->transform.position = Vec2D(0,150);
-
-    //newRB->velocity = Vec2D(100, 0);
-
-    //newObj->transform.rotation = 0.7f;
-    //newObj2->transform.rotation = -0.2f;
-    newObj2->transform.position = Vec2D(0,-50);
-    newObj2->friction = 0.2f;
-    //newObj2->setPhysicsEnabled(true);
-    //newObj->setPhysicsEnabled(true);
-    //newRB->setPhysicsEnabled(true);
-    //newRB->angularVelocity = 3;
     ColliderShapeTemplate shapetemplate1;
     shapetemplate1.numPoints = 4;
     shapetemplate1.points = (Vec2D*)malloc(4*sizeof(Vec2D));
@@ -63,33 +42,39 @@ int main() {
     staticObject.numPoints = 4;
     staticObject.points = (Vec2D*)malloc(4*sizeof(Vec2D));
 
-    staticObject.points[0].X = -65;
+    staticObject.points[0].X = -105;
     staticObject.points[0].Y = -25;
 
-    staticObject.points[1].X = -65;
+    staticObject.points[1].X = -105;
     staticObject.points[1].Y = 25;
     
-    staticObject.points[2].X = 65;
+    staticObject.points[2].X = 105;
     staticObject.points[2].Y = 25;
 
-    staticObject.points[3].X = 65;
+    staticObject.points[3].X = 105;
     staticObject.points[3].Y = -25;
     std::chrono::duration<double, std::milli> duration;
-    //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
+
+    auto* newObj2 = myScene.AddNewObject<GObject>();
+
+    newObj2->transform.position = Vec2D(0,-50);
+    //newObj2->transform.rotation = 0.5f;
+    newObj2->friction = 0.2f;
+
     auto* coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-    //auto* coll3rb = newRB->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
-    //auto* col3 = newObj2->CreateComponent<GColliderComp>(newObj2, GColliderComp::ColliderType::Polygon, &shapetemplate1);
-    //newObj2->transform.position = Vec2D(-50,0);
 
     for (int i = 0;i < 5; i++)
     {
         for (int j  = 0; j < 5; j++)
         {
             auto* newObj = myScene.AddNewObject<GObject>();
+            if ((i+j)%2 == 0)
+            auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 10);
+            else
             auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
 
             newObj->setPhysicsEnabled(true);
-            newObj->transform.position = Vec2D(-50+i*20.5f,-10+j*20);
+            newObj->transform.position = Vec2D(-10+i*20.5f,-10+j*20);
         }
     }
 
@@ -97,23 +82,25 @@ int main() {
     auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
 
     newObj->setPhysicsEnabled(true);
-    newObj->transform.position = Vec2D(-300,60);
-    newObj->velocity = Vec2D(250,0);
-    newObj->mass = 300;
-    newObj->momentOfInertia = 3000;
-    
+    newObj->transform.position = Vec2D(-600,60);
+    newObj->friction = 0.9f;
+    newObj->velocity = Vec2D(290,0);
+    newObj->mass = 50;
+    newObj->momentOfInertia = 15000;
+    //newObj->angularVelocity = 5;
+
     myScene.Begin();
     while(window.isOpen())
     {
         auto start = std::chrono::steady_clock::now();
-        //std::this_thread::sleep_for(std::chrono::milliseconds(16));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(7));
 
         sf::Vector2f pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         Vec2D posVec = Vec2D(pos.x, pos.y);
         posVec = convertScreenToWorld(posVec, 640,480);        
         //posVec = convertWorldToScreen(posVec, 640,480);
         //std::cout << posVec.X << " - " << posVec.Y << std::endl;
-        
+        //newObj2->transform.rotation = posVec.X/500;
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -176,6 +163,26 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
                     bound.setOutlineColor(sf::Color::Green);
                     bound.setOutlineThickness(1.f);
                     //window->draw(bound);
+                }
+                else if (col->myColliderType == GColliderComp::ColliderType::Circle)
+                {
+                    sf::CircleShape circle(col->circleRadius);
+                    circle.setFillColor(sf::Color::Green); // Set the fill color to green
+                    Vec2D pos = convertWorldToScreen(col->gobject->transform.position);
+                    circle.setPosition(pos.X-col->circleRadius, pos.Y-col->circleRadius);
+                    circle.setOutlineColor(sf::Color::Red); // Set a red outline color
+                    circle.setFillColor(sf::Color::Transparent);
+                    circle.setOutlineThickness(1.f);
+                    window->draw(circle);
+
+                    Vec2D linePos = col->gobject->transform.local_to_scene(Vec2D(col->circleRadius,0));
+                    Vec2D linescenepos = convertWorldToScreen(linePos);
+                    sf::Vertex line[] =
+                    {
+                        sf::Vertex(sf::Vector2f(pos.X, pos.Y)), // Start point (x1, y1)
+                        sf::Vertex(sf::Vector2f(linescenepos.X, linescenepos.Y))  // End point (x2, y2)
+                    };
+                    window->draw(line, 2, sf::Lines);
                 }
             }
         }

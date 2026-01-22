@@ -24,7 +24,8 @@ void GScene::Tick_Objects(float DeltaTime)
 
 void GScene::Tick_Physics(float DeltaTime)
 {
-    physics.Tick(DeltaTime);
+    for (int i = 0; i < 5; i ++)
+        physics.Tick(DeltaTime/5);
 }
 
 //todo
