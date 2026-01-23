@@ -4,7 +4,7 @@
 
 ## Overview
 
-This is a simple 2D physics engine built around a scene–object–component architecture (inspiration is a mix of both unity and unreal engine workflow)
+This is a 2D physics engine built around a scene–object–component architecture (inspiration is a mix of both unity and unreal engine workflow)
 
 
 
@@ -56,12 +56,12 @@ A physics object represents an object in the scene.
 - Contains a vector of components
 - Components are  colliders as of now
 
-Conceptually:
 
 ```
 Object
- ├── GTransform
- └── Components[] 
+ |-- GTransform
+ |-- Physics related values (velocity, friction etc)
+ |-- Components[] 
 ```
 
 This allows:
@@ -74,10 +74,6 @@ This allows:
 ---
 
 ### 4. Components (Colliders only as of now)
-
-Components define the **physical shape** of an object.
-
-Key ideas:
 
 - Stored in a `std::vector` inside the physics object
 - Each component references the parent object's transform
@@ -152,6 +148,7 @@ shapeTemplate1.points[1] = Vec2D(-10,  10);
 shapeTemplate1.points[2] = Vec2D( 10,  10);
 shapeTemplate1.points[3] = Vec2D( 10, -10);
 ```
+The template should be a convex shape. If convex shape is needed, separate the shape into convex shapes and add them as two colliders.
 
 This template is **not owned by the collider**. It acts as a reference that multiple colliders can point to.
 
@@ -201,7 +198,7 @@ Static objects participate in collision detection but do not move or respond to 
 
 ### Step 4: Setting Physical Properties
 
-When physics is enabled, the object acts as a rigid body and exposes physical parameters:
+When physics is enabled, the object acts as a rigid body and responds to collisions:
 
 ```cpp
 newObj->transform.position = Vec2D(-2500, 350);
@@ -212,15 +209,12 @@ newObj->mass               = 70.0f;
 newObj->momentOfInertia    = 250000.0f;
 ```
 
-These values are used during collision response and motion integration.
-
-
 
 The update loop will handle the rest
 
 ---
 
-## Rendering (Brief)
+## Rendering
 
 - SFML is used only for visualization
 - Physics objects expose transform data
@@ -234,7 +228,8 @@ The physics engine itself has **no dependency on rendering logic** and can be re
 
 ## TODO
 
-Create a collision notification system so that objects can get to know when they encounter a collision.
+- Create a collision notification system so that objects can get to know when they encounter a collision.
+  
 
 
 
