@@ -2,6 +2,14 @@
 
 ---
 
+## Demo
+
+
+https://github.com/user-attachments/assets/ca7d8441-d8c4-4e95-8b00-31d073ee4762
+
+
+---
+
 ## Overview
 
 This is a 2D physics engine built around a scene–object–component architecture (inspiration is a mix of both unity and unreal engine workflow)
@@ -76,8 +84,6 @@ This allows:
 ### 4. Components (Colliders only as of now)
 
 - Stored in a `std::vector` inside the physics object
-- Each component references the parent object's transform
-- Used for collision detection and collision resolution
 
 Types of colliders:
 
