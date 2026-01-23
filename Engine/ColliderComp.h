@@ -23,7 +23,7 @@ class GColliderComp : public GComponent{
         Polygon
     };
 
-    GColliderComp(GObject* myParentObject, ColliderType col, float radius);
+    GColliderComp(GObject* myParentObject, ColliderType col, float radius, Vec2D center = Vec2D(0,0));
     GColliderComp(GObject* myParentObject, ColliderType col, ColliderShapeTemplate *shape);
 
     bool CalculateBoundingBox();
@@ -32,6 +32,7 @@ class GColliderComp : public GComponent{
 
     ColliderShapeTemplate* myShape;
     float circleRadius;
+    Vec2D circleCenter;
     ColliderType myColliderType;
 
     Vec2D boundingBoxMax;

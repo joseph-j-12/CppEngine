@@ -3,10 +3,11 @@
 #include "GScene.h"
 #include "GPhysics.h"
 #include <iostream>
-GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, float radius) : GComponent(myParentObject)
+GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, float radius, Vec2D center) : GComponent(myParentObject)
 {
     myColliderType = col;
     circleRadius = radius;
+    circleCenter = center;
 }
 
 GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, ColliderShapeTemplate *shape) : GComponent(myParentObject)
@@ -42,8 +43,9 @@ bool GColliderComp::CalculateBoundingBox()
     }
     if (myColliderType == ColliderType::Circle)
     {
-        boundingBoxMax = Vec2D(gobject->transform.position.X + circleRadius, gobject->transform.position.Y + circleRadius);
-        boundingBoxMin = Vec2D(gobject->transform.position.X - circleRadius, gobject->transform.position.Y - circleRadius);
+        Vec2D centerTransformed = gobject->transform.local_to_scene(circleCenter);
+        boundingBoxMax = Vec2D(centerTransformed.X + circleRadius, centerTransformed.Y + circleRadius);
+        boundingBoxMin = Vec2D(centerTransformed.X - circleRadius, centerTransformed.Y - circleRadius);
         return true;
     }
     

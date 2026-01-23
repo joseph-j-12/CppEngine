@@ -30,7 +30,7 @@ class GObject{
         transform.gobject = this;
         angularVelocity = 0.f;
         mass = 30;
-        momentOfInertia = 300;
+        momentOfInertia = 3000;
         bounce = 0.1f;
         friction = 0.1f;
         myScene = scene;
