@@ -18,10 +18,10 @@ This is a 2D physics engine built around a scene–object–component architectu
 
 - A Scene owns and updates all physics objects
 - Each Physics Object has a transform and a list of components (colliders only as of now)
-- A Spatial Hash Grid is used to speed up collision checks
+- A spatial hashing is used to speed up collision checks
 
 
-
+- Any convex shape is supported for a collider
 
 
 ---
