@@ -9,4 +9,5 @@
 #include "Engine/ColliderComp.h"
 #include "Engine/GPhysics.h"
 #include "Engine/GSpatialHash.h"
+#include "Engine/GSpringComponent.h"
 #endif

@@ -37,9 +37,9 @@ class GObject{
         
     }
 
-    void Begin();
+    void Begin() {};
 
-    void Tick(float DeltaTime);
+    void Tick(float DeltaTime) {};
 
     virtual ~GObject() = default;
 

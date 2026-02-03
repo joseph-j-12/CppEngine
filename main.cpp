@@ -127,7 +127,7 @@ int main() {
 
     // newObj2 = myScene.AddNewObject<GObject>();
     // newObj2->transform.position = Vec2D(-0,30);
-    // newObj2->friction = 0.2f;
+    // MATLAB Function1newObj2->friction = 0.2f;
     // newObj2->bounce = 0.3f;
     // newObj2->transform.rotation = 0.78f;
     // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 30);
@@ -147,67 +147,58 @@ int main() {
     //         newObj->mass = 100;
     //         newObj->momentOfInertia = 10000;
     //         newObj->bounce = 0.1f;
-    //         //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*2;
+    //         //newObj->friction = 1.f;
+    //         //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*200;
     //     }
     // }
 
-    for (int j  = 0; j < 15; j++)
-    {
-        auto* newObj = myScene.AddNewObject<GObject>();
-       // if ((i+j)%2 == 0)
-        auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 10);
-        //else
-        //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
-        newObj->setPhysicsEnabled(true);
-        newObj->transform.position = Vec2D(-350+j*20, -10);
-        newObj->mass = 10;
-        newObj->momentOfInertia = 10000;
-        newObj->bounce = 0.1f;
-        newObj->friction = 1.f;
-        //newObj->angularVelocity = 50.f;
-        //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*2;
-    }
+    // for (int j  = 0; j < 15; j++)
+    // {
+    //     auto* newObj = myScene.AddNewObject<GObject>();
+    //    // if ((i+j)%2 == 0)
+    //     auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 10);
+    //     //else
+    //     //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
+    //     newObj->setPhysicsEnabled(true);
+    //     newObj->transform.position = Vec2D(-350+j*22, -10);
+    //     newObj->mass = 1000;
+    //     newObj->momentOfInertia = 100000;
+    //     newObj->bounce = 0.1f;
+    //     newObj->friction = 1.5f;
+    //     newObj->angularVelocity = -500.f;
+    //     //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*2;
+    // }
 
-    for (int j  = 0; j < 15; j++)
-    {
-        auto* newObj = myScene.AddNewObject<GObject>();
-       // if ((i+j)%2 == 0)
-        auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 10);
-        //else
-        //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
-        newObj->setPhysicsEnabled(true);
-        //newObj->angularVelocity = 50;
-        newObj->transform.position = Vec2D(140, 1500+j*20);
-        newObj->mass = 1000;
-        newObj->momentOfInertia = 100000;
-        newObj->bounce = 0.1f;
-        newObj->friction = 0.8f;
-        //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*2;
-    }
+    auto* newObj3 = myScene.AddNewObject<GObject>();
+    auto* coll = newObj3->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
+    newObj3->setPhysicsEnabled(true);
+    newObj3->transform.position = Vec2D(-180, 100);
+    //newObj->velocity = Vec2D(0,-100);
+    newObj3->friction = 0.2f;
+    newObj3->mass = 300;
+    //newObj->transform.rotation = 1.5f;
+    newObj3->momentOfInertia = 300000;
+    newObj3->bounce = 0.1f;
+    newObj3->angularVelocity = -5.f;
+
 
     auto* newObj = myScene.AddNewObject<GObject>();
-    auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-    newObj->setPhysicsEnabled(true);
-    newObj->transform.position = Vec2D(-180, 100);
-    //newObj->velocity = Vec2D(0,-100);
-    newObj->friction = 0.2f;
-    newObj->mass = 300;
-    //newObj->transform.rotation = 1.5f;
-    newObj->momentOfInertia = 30000;
-    newObj->bounce = 0.1f;
-
-
-    newObj = myScene.AddNewObject<GObject>();
-    coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate3);
+    coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 25);
     //coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1, Vec2D(0,50));
+    auto* spring = newObj->CreateComponent<GSpringComponent>(newObj3);
+    spring->spring_constant = 200.5f;
+    spring->myAttachedPos = Vec2D(15,15);
+    spring->otherAttachedPos = Vec2D(0,25);
+    spring->attachDirection = Vec2D(0,1);
+    spring->mean_length = 200.f;
     newObj->setPhysicsEnabled(true);
-    newObj->transform.position = Vec2D(260, 0);
-    //newObj->velocity = Vec2D(0,-100);
+    newObj->transform.position = Vec2D(-180, 50);
+    newObj->velocity = Vec2D(0,100);
     newObj->mass = 300;
     newObj->transform.rotation = 1.5f;
     newObj->momentOfInertia = 30000;
     newObj->bounce = 0.1f;
-    //newObj->angularVelocity = 5.f;
+    //newObj->angularVelocity = 50.f;
 
 
     // auto* newObj = myScene.AddNewObject<GObject>();
@@ -250,7 +241,7 @@ int main() {
         //newObj2->transform.position = posVec;
 
         myScene.Tick_Physics(duration.count() == 0 ? 0.00016 : 3*duration.count()/1000);
-
+        myScene.Tick_Objects(duration.count() == 0 ? 0.00016 : 3*duration.count()/1000);
         renderColliders(&myScene, &window);
       
         window.display(); 
@@ -325,8 +316,23 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
                     window->draw(line, 2, sf::Lines);
                 }
             }
+
+            else if (typeid(GSpringComponent) == typeid(*coll))
+            {
+                auto* spring = dynamic_cast<GSpringComponent*>(coll.get());
+                Vec2D linePos = spring->gobject->transform.local_to_scene(spring->myAttachedPos);
+                Vec2D linePos2 = spring->otherObject->transform.local_to_scene(spring->otherAttachedPos);
+                Vec2D linescenepos1 = convertWorldToScreen(linePos);
+                Vec2D linescenepos2 = convertWorldToScreen(linePos2);
+                sf::Vertex line[] =
+                {
+                    sf::Vertex(sf::Vector2f(linescenepos2.X, linescenepos2.Y)), // Start point (x1, y1)
+                    sf::Vertex(sf::Vector2f(linescenepos1.X, linescenepos1.Y))  // End point (x2, y2)
+                };
+                window->draw(line, 2, sf::Lines);
+            }
         }
-        //std::cout << obj->velocity.Y << std::endl;
+        
     }
 }
 

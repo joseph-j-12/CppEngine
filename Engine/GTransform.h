@@ -62,6 +62,18 @@ class GTransform{
         }
     }
 
+    Vec2D local_to_scene_vector(Vec2D pos)
+    {
+        if (parent == nullptr)
+        {
+            return Vec2D(pos.X*CosandSin[0] - pos.Y*CosandSin[1], pos.X*CosandSin[1] + pos.Y*CosandSin[0]);
+        }
+        else
+        {
+            return parent->local_to_scene_vector(Vec2D(pos.X*CosandSin[0] - pos.Y*CosandSin[1], pos.X*CosandSin[1] + pos.Y*CosandSin[0]));
+        }
+    }
+
     Vec2D scene_to_local(Vec2D worldPos)
     {
         if (parent != nullptr)

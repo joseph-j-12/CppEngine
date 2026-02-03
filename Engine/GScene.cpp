@@ -19,7 +19,14 @@ void GScene::Begin()
 
 void GScene::Tick_Objects(float DeltaTime)
 {
-
+    for (auto& obj : sceneObjects)
+    {
+        //obj->Tick(DeltaTime);
+        for (auto& comp : obj->myComponents)
+        {
+            comp->Tick(DeltaTime);
+        }        
+    }
 }
 
 void GScene::Tick_Physics(float DeltaTime)
