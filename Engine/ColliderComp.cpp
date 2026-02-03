@@ -7,13 +7,14 @@ GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, float ra
 {
     myColliderType = col;
     circleRadius = radius;
-    circleCenter = center;
+    myCenter = center;
 }
 
-GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, ColliderShapeTemplate *shape) : GComponent(myParentObject)
+GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, ColliderShapeTemplate *shape, Vec2D center) : GComponent(myParentObject)
 {
     myShape = shape;
     myColliderType = col;
+    myCenter = center;
 }
 
 bool GColliderComp::CalculateBoundingBox()
@@ -24,13 +25,14 @@ bool GColliderComp::CalculateBoundingBox()
     
     if (myColliderType == ColliderType::Polygon)
     {
-        float maxX = gobject->transform.local_to_scene(myShape->points[0]).X; 
-        float minX = gobject->transform.local_to_scene(myShape->points[0]).X; 
-        float maxY = gobject->transform.local_to_scene(myShape->points[0]).Y; 
-        float minY = gobject->transform.local_to_scene(myShape->points[0]).Y;
+        Vec2D pointTransformed = myShape->points[0] + myCenter;
+        float maxX = gobject->transform.local_to_scene(pointTransformed).X; 
+        float minX = gobject->transform.local_to_scene(pointTransformed).X; 
+        float maxY = gobject->transform.local_to_scene(pointTransformed).Y; 
+        float minY = gobject->transform.local_to_scene(pointTransformed).Y;
         for (int i = 0; i < myShape->numPoints; i++)
         {
-            Vec2D transformedPoint = gobject->transform.local_to_scene(myShape->points[i]);
+            Vec2D transformedPoint = gobject->transform.local_to_scene(myShape->points[i] + myCenter);
             if (transformedPoint.X > maxX) maxX = transformedPoint.X;
             if (transformedPoint.Y > maxY) maxY = transformedPoint.Y;
             if (transformedPoint.X < minX) minX = transformedPoint.X;
@@ -43,7 +45,7 @@ bool GColliderComp::CalculateBoundingBox()
     }
     if (myColliderType == ColliderType::Circle)
     {
-        Vec2D centerTransformed = gobject->transform.local_to_scene(circleCenter);
+        Vec2D centerTransformed = gobject->transform.local_to_scene(myCenter);
         boundingBoxMax = Vec2D(centerTransformed.X + circleRadius, centerTransformed.Y + circleRadius);
         boundingBoxMin = Vec2D(centerTransformed.X - circleRadius, centerTransformed.Y - circleRadius);
         return true;

@@ -15,12 +15,14 @@ void renderColliders(GScene* scene, sf::RenderWindow *window);
 
 int screenW = 840;
 int screenH = 680;
+
 int main() {
 
     sf::RenderWindow window(sf::VideoMode(840,680),"app");
 
     GScene myScene;
     
+
 
     ColliderShapeTemplate shapetemplate1;
     shapetemplate1.numPoints = 4;
@@ -158,10 +160,11 @@ int main() {
         //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
         newObj->setPhysicsEnabled(true);
         newObj->transform.position = Vec2D(-350+j*20, -10);
-        newObj->mass = 100;
+        newObj->mass = 10;
         newObj->momentOfInertia = 10000;
         newObj->bounce = 0.1f;
-        newObj->friction = 0.2f;
+        newObj->friction = 1.f;
+        //newObj->angularVelocity = 50.f;
         //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*2;
     }
 
@@ -173,11 +176,12 @@ int main() {
         //else
         //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
         newObj->setPhysicsEnabled(true);
+        //newObj->angularVelocity = 50;
         newObj->transform.position = Vec2D(140, 1500+j*20);
         newObj->mass = 1000;
         newObj->momentOfInertia = 100000;
         newObj->bounce = 0.1f;
-        newObj->friction = 0.2f;
+        newObj->friction = 0.8f;
         //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*2;
     }
 
@@ -195,11 +199,12 @@ int main() {
 
     newObj = myScene.AddNewObject<GObject>();
     coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate3);
+    //coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1, Vec2D(0,50));
     newObj->setPhysicsEnabled(true);
     newObj->transform.position = Vec2D(260, 0);
     //newObj->velocity = Vec2D(0,-100);
     newObj->mass = 300;
-    //newObj->transform.rotation = 1.5f;
+    newObj->transform.rotation = 1.5f;
     newObj->momentOfInertia = 30000;
     newObj->bounce = 0.1f;
     //newObj->angularVelocity = 5.f;
@@ -277,7 +282,7 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
                     
                     for (int i = 0; i < col->myShape->numPoints; i++)
                     {
-                        Vec2D p1 = convertWorldToScreen(obj->transform.local_to_scene(col->myShape->points[i]));
+                        Vec2D p1 = convertWorldToScreen(obj->transform.local_to_scene(col->myShape->points[i] + col->myCenter));
                         polygon.setPoint(i,sf::Vector2f(p1.X,p1.Y));    
                     }  
                     polygon.setFillColor(sf::Color::Transparent); 
@@ -297,19 +302,20 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
                     bound.setOutlineColor(sf::Color::Green);
                     bound.setOutlineThickness(1.f);
                     //window->draw(bound);
+
                 }
                 else if (col->myColliderType == GColliderComp::ColliderType::Circle)
                 {
                     sf::CircleShape circle(col->circleRadius);
                     circle.setFillColor(sf::Color::Green); // Set the fill color to green
-                    Vec2D pos = convertWorldToScreen(col->gobject->transform.local_to_scene(col->circleCenter));
+                    Vec2D pos = convertWorldToScreen(col->gobject->transform.local_to_scene(col->myCenter));
                     circle.setPosition(pos.X-col->circleRadius, pos.Y-col->circleRadius);
                     circle.setOutlineColor(obj->getPhysicsEnabled() ?  sf::Color::Red : sf::Color::Blue); // Set a red outline color
                     circle.setFillColor(sf::Color::Transparent);
                     circle.setOutlineThickness(1.f);
                     window->draw(circle);
 
-                    Vec2D linePos = col->gobject->transform.local_to_scene(col->circleCenter+Vec2D(col->circleRadius,0));
+                    Vec2D linePos = col->gobject->transform.local_to_scene(col->myCenter+Vec2D(col->circleRadius,0));
                     Vec2D linescenepos = convertWorldToScreen(linePos);
                     sf::Vertex line[] =
                     {

@@ -109,7 +109,7 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
                 int k = (j+1);
                 if (k>=o1->myShape->numPoints) k = 0;
 
-                Vec2D axis = Vec2D::GetPerpendicular(o1->gobject->transform.local_to_scene(o1->myShape->points[k])-o1->gobject->transform.local_to_scene(o1->myShape->points[j])).getNormal();
+                Vec2D axis = Vec2D::GetPerpendicular(o1->gobject->transform.local_to_scene(o1->myShape->points[k]+o1->myCenter)-o1->gobject->transform.local_to_scene(o1->myShape->points[j]+o1->myCenter)).getNormal();
                 
                 //finding projection of 1st shape
                 float min_r1 = INFINITY; float max_r1 = -INFINITY;
@@ -117,7 +117,7 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
                 center2 = Vec2D(0,0);
                 for (int p = 0; p < o1->myShape->numPoints; p++)
                 {
-                    Vec2D pt = o1->gobject->transform.local_to_scene(o1->myShape->points[p]);
+                    Vec2D pt = o1->gobject->transform.local_to_scene(o1->myShape->points[p]+o1->myCenter);
                     float proj = Vec2D::DotProduct(axis, pt);
                     min_r1 = std::min(min_r1, proj);
                     max_r1 = std::max(max_r1, proj);
@@ -131,7 +131,7 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
                 {
                     for (int p = 0; p < o2->myShape->numPoints; p++)
                     {
-                        Vec2D pt = o2->gobject->transform.local_to_scene(o2->myShape->points[p]);
+                        Vec2D pt = o2->gobject->transform.local_to_scene(o2->myShape->points[p]+o2->myCenter);
                         float proj = Vec2D::DotProduct(axis, pt);
                         min_r2 = std::min(min_r2, proj);
                         max_r2 = std::max(max_r2, proj);
@@ -148,7 +148,7 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
 
                     //float proj1 = Vec2D::DotProduct(axis, side1);
                     //float proj2 = Vec2D::DotProduct(axis, side2);
-                    center2 = o2->gobject->transform.local_to_scene(o2->circleCenter);
+                    center2 = o2->gobject->transform.local_to_scene(o2->myCenter);
                     float centerproj = Vec2D::DotProduct(axis, center2);
 
                     min_r2 = centerproj - o2->circleRadius;//std::min(min_r2, std::min(proj1,proj2));
@@ -188,12 +188,12 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
         {
             if (o2->myColliderType == GColliderComp::ColliderType::Polygon)
             {
-                Vec2D center1 = o1->gobject->transform.local_to_scene(o1->circleCenter);
+                Vec2D center1 = o1->gobject->transform.local_to_scene(o1->myCenter);
                 Vec2D closest;
                 float minDist = INFINITY;
                 for (int j = 0; j < o2->myShape->numPoints; j++)
                 {
-                    Vec2D point = o2->gobject->transform.local_to_scene(o2->myShape->points[j]);
+                    Vec2D point = o2->gobject->transform.local_to_scene(o2->myShape->points[j]+o2->myCenter);
                     float dist = (point-center1).magnitude();
                     if (dist < minDist)
                     {
@@ -212,7 +212,7 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
                 float min_r2 = INFINITY; float max_r2 = -INFINITY;
                 for (int p = 0; p < o2->myShape->numPoints; p++)
                 {
-                    float proj = Vec2D::DotProduct(axis, o2->gobject->transform.local_to_scene(o2->myShape->points[p]));
+                    float proj = Vec2D::DotProduct(axis, o2->gobject->transform.local_to_scene(o2->myShape->points[p]+o2->myCenter));
                     min_r2 = std::min(min_r2, proj);
                     max_r2 = std::max(max_r2, proj);
                 }
@@ -240,8 +240,8 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
 
             else if (o2->myColliderType == GColliderComp::ColliderType::Circle)
             {
-                Vec2D center1 = o1->gobject->transform.local_to_scene(o1->circleCenter);
-                Vec2D center2 = o2->gobject->transform.local_to_scene(o2->circleCenter);
+                Vec2D center1 = o1->gobject->transform.local_to_scene(o1->myCenter);
+                Vec2D center2 = o2->gobject->transform.local_to_scene(o2->myCenter);
                 Vec2D dir = center2 - center1;
 
                 float dist = dir.magnitude();
@@ -280,10 +280,11 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
     {
         for (int i = 0; i < object_ther_than_axis->myShape->numPoints; i++)
         {
-            float t = Vec2D::DotProduct(col.normal, object_ther_than_axis->gobject->transform.local_to_scene(object_ther_than_axis->myShape->points[i]));
+            Vec2D pt = object_ther_than_axis->gobject->transform.local_to_scene(object_ther_than_axis->myShape->points[i]+object_ther_than_axis->myCenter);
+            float t = Vec2D::DotProduct(col.normal, pt);
             if (t<proj) {
                 proj = t; 
-                col.point = object_ther_than_axis->gobject->transform.local_to_scene(object_ther_than_axis->myShape->points[i]);
+                col.point = pt;
             }
         }
     }
