@@ -29,6 +29,7 @@ class GSpringComponent :  public GComponent{
     float spring_constant;
     float mean_length;
     Vec2D attachDirection; //this object local space
+    bool constrainedAlongAxis = false;
 
 
     void Begin() override;
