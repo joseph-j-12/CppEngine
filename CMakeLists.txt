@@ -9,6 +9,7 @@ set(SOURCES
     Engine/GObject.cpp
     Engine/GSpatialHash.cpp
     Engine/GSpringComponent.cpp
+    CarScene.cpp
 )
 
 add_executable(run ${SOURCES}) #

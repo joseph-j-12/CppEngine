@@ -30,6 +30,9 @@ class GColliderComp : public GComponent{
     void Begin() override;
     void Tick(float DeltaTime) override;
 
+    bool trigger = false;
+    bool notify_collision = false;
+    
     ColliderShapeTemplate* myShape;
     float circleRadius;
     Vec2D myCenter;

@@ -16,115 +16,144 @@ void renderColliders(GScene* scene, sf::RenderWindow *window);
 int screenW = 840;
 int screenH = 680;
 
+float scrollx = 0;
+float scrolly = 0;
 int main() {
 
     sf::RenderWindow window(sf::VideoMode(840,680),"app");
 
-    GScene myScene;
+    CarScene myScene;
     
 
 
-    ColliderShapeTemplate shapetemplate1;
-    shapetemplate1.numPoints = 4;
-    shapetemplate1.points = (Vec2D*)malloc(4*sizeof(Vec2D));
+    // ColliderShapeTemplate shapetemplate1;
+    // shapetemplate1.numPoints = 4;
+    // shapetemplate1.points = new Vec2D[4];//(Vec2D*)malloc(4*sizeof(Vec2D));
 
-    shapetemplate1.points[0].X = -10;
-    shapetemplate1.points[0].Y = -10;
+    // shapetemplate1.points[0].X = -10;
+    // shapetemplate1.points[0].Y = -10;
 
-    shapetemplate1.points[1].X = -10;
-    shapetemplate1.points[1].Y = 10;
+    // shapetemplate1.points[1].X = -10;
+    // shapetemplate1.points[1].Y = 10;
     
-    shapetemplate1.points[2].X = 10;
-    shapetemplate1.points[2].Y = 10;
+    // shapetemplate1.points[2].X = 10;
+    // shapetemplate1.points[2].Y = 10;
 
-    shapetemplate1.points[3].X = 10;
-    shapetemplate1.points[3].Y = -10;
-
-
-    ColliderShapeTemplate shapetemplate3;
-    shapetemplate3.numPoints = 7;
-    shapetemplate3.points = (Vec2D*)malloc(7*sizeof(Vec2D));
-    for (int i = 0; i < 7; i++)
-    {
-        shapetemplate3.points[i] = Vec2D(30*std::cos(i*6.28f/7),30*std::sin(i*6.28f/7));
-    }
+    // shapetemplate1.points[3].X = 10;
+    // shapetemplate1.points[3].Y = -10;
 
 
-    ColliderShapeTemplate staticObject;
-    staticObject.numPoints = 4;
-    staticObject.points = (Vec2D*)malloc(4*sizeof(Vec2D));
+    // ColliderShapeTemplate shapetemplate3;
+    // shapetemplate3.numPoints = 7;
+    // shapetemplate3.points = new Vec2D[7];
+    // for (int i = 0; i < 7; i++)
+    // {
+    //     shapetemplate3.points[i] = Vec2D(30*std::cos(i*6.28f/7),30*std::sin(i*6.28f/7));
+    // }
 
-    staticObject.points[0].X = -105;
-    staticObject.points[0].Y = -25;
 
-    staticObject.points[1].X = -105;
-    staticObject.points[1].Y = 25;
+    // ColliderShapeTemplate staticObject;
+    // staticObject.numPoints = 4;
+    // staticObject.points = new Vec2D[4];
+
+    // staticObject.points[3].X = -105;
+    // staticObject.points[3].Y = -25;
+
+    // staticObject.points[2].X = -105;
+    // staticObject.points[2].Y = 25;
     
-    staticObject.points[2].X = 105;
-    staticObject.points[2].Y = 25;
+    // staticObject.points[1].X = 105;
+    // staticObject.points[1].Y = 25;
 
-    staticObject.points[3].X = 105;
-    staticObject.points[3].Y = -25;
+    // staticObject.points[0].X = 105;
+    // staticObject.points[0].Y = -25;
 
-    ColliderShapeTemplate staticObject2;
-    staticObject2.numPoints = 4;
-    staticObject2.points = (Vec2D*)malloc(4*sizeof(Vec2D));
+    // ColliderShapeTemplate staticObject2;
+    // staticObject2.numPoints = 4;
+    // staticObject2.points = new Vec2D[4];
 
-    staticObject2.points[0].X = -25;
-    staticObject2.points[0].Y = -25;
+    // staticObject2.points[0].X = -25;
+    // staticObject2.points[0].Y = -25;
 
-    staticObject2.points[1].X = -25;
-    staticObject2.points[1].Y = 25;
+    // staticObject2.points[1].X = -25;
+    // staticObject2.points[1].Y = 25;
     
-    staticObject2.points[2].X = 25;
-    staticObject2.points[2].Y = 25;
+    // staticObject2.points[2].X = 25;
+    // staticObject2.points[2].Y = 25;
 
-    staticObject2.points[3].X = 25;
-    staticObject2.points[3].Y = -25;
+    // staticObject2.points[3].X = 25;
+    // staticObject2.points[3].Y = -25;
 
     std::chrono::duration<double, std::milli> duration;
 
-    auto* newObj2 = myScene.AddNewObject<GObject>();
+    // auto* newObj2 = myScene.AddNewObject<GObject>();
 
-    newObj2->transform.position = Vec2D(-100,-170);
-    newObj2->transform.rotation =- 0.3f;
-    newObj2->friction = 1.f;
-    newObj2->bounce = 0.3f;
+    // newObj2->transform.position = Vec2D(-100,-170);
+    // newObj2->transform.rotation =- 0.3f;
+    // newObj2->friction = 0.9f;
+    // newObj2->bounce = 0.3f;
 
-    auto* coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
+    // auto* coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
 
-    newObj2 = myScene.AddNewObject<GObject>();
-    newObj2->transform.position = Vec2D(-255,-100);
-    newObj2->transform.rotation = -0.6f;
-    newObj2->friction = 1.f;
-    newObj2->bounce = 0.3f;
-    coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
+    // newObj2 = myScene.AddNewObject<GObject>();
+    // newObj2->transform.position = Vec2D(-255,-100);
+    // newObj2->transform.rotation = -0.6f;
+    // newObj2->friction = 0.9f;
+    // newObj2->bounce = 0.3f;
+    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
+
+
+    // // newObj2 = myScene.AddNewObject<GObject>();
+    // // newObj2->transform.position = Vec2D(100,100);
+    // // newObj2->transform.rotation = 0.6f;
+    // // newObj2->friction = 1.8f;
+    // // newObj2->bounce = 0.8f;
+    // // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
+
 
 
     // newObj2 = myScene.AddNewObject<GObject>();
-    // newObj2->transform.position = Vec2D(100,100);
-    // newObj2->transform.rotation = 0.6f;
-    // newObj2->friction = 1.8f;
+    // newObj2->transform.position = Vec2D(55,-210);
+    // newObj2->transform.rotation = -0.2f;
+    // newObj2->friction = 0.9f;
+    // newObj2->bounce = 0.8f;
+    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
+
+    // newObj2 = myScene.AddNewObject<GObject>();
+    // newObj2->transform.position = Vec2D(205,-220);
+    // newObj2->transform.rotation = 0.0f;
+    // newObj2->friction = 0.9f;
+    // newObj2->bounce = 0.8f;
+    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
+
+    // newObj2 = myScene.AddNewObject<GObject>();
+    // newObj2->transform.position = Vec2D(305,-220);
+    // newObj2->transform.rotation = 0.4f;
+    // newObj2->friction = 0.9f;
+    // newObj2->bounce = 0.8f;
+    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
+
+    // // newObj2 = myScene.AddNewObject<GObject>();
+    // // newObj2->transform.position = Vec2D(-30,-190);
+    // // newObj2->transform.rotation = 0.4f;
+    // // newObj2->friction = 1.f;
+    // // newObj2->bounce = 0.8f;
+    // // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject2);
+
+    // newObj2 = myScene.AddNewObject<GObject>();
+    // newObj2->transform.position = Vec2D(405,-120);
+    // newObj2->transform.rotation = 1.4f;
+    // newObj2->friction = 0.9f;
     // newObj2->bounce = 0.8f;
     // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
 
 
-
-    newObj2 = myScene.AddNewObject<GObject>();
-    newObj2->transform.position = Vec2D(55,-210);
-    newObj2->transform.rotation = -0.2f;
-    newObj2->friction = 1.f;
-    newObj2->bounce = 0.8f;
-    coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-
-     newObj2 = myScene.AddNewObject<GObject>();
-    newObj2->transform.position = Vec2D(205,-220);
-    newObj2->transform.rotation = 0.0f;
-    newObj2->friction = 1.f;
-    newObj2->bounce = 0.8f;
-    coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-
-
+    // newObj2 = myScene.AddNewObject<GObject>();
+    // newObj2->transform.position = Vec2D(-325,50);
+    // newObj2->transform.rotation = 1.4f;
+    // newObj2->friction = 0.9f;
+    // newObj2->bounce = 0.8f;
+    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
     // newObj2 = myScene.AddNewObject<GObject>();
     // newObj2->transform.position = Vec2D(-0,30);
     // MATLAB Function1newObj2->friction = 0.2f;
@@ -132,25 +161,25 @@ int main() {
     // newObj2->transform.rotation = 0.78f;
     // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 30);
 
-    // for (int i = 0;i < 3; i++)
-    // {
-    //     for (int j  = 0; j < 50; j++)
-    //     {
-    //         auto* newObj = myScene.AddNewObject<GObject>();
-    //        // if ((i+j)%2 == 0)
-    //         auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 10 + (i*j)%10);
-    //         //else
-    //         //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
+    for (int i = 0;i < 3; i++)
+    {
+        for (int j  = 0; j < 50; j++)
+        {
+            auto* newObj = myScene.AddNewObject<GObject>();
+           // if ((i+j)%2 == 0)
+            auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 5);
+            //else
+            //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
 
-    //         newObj->setPhysicsEnabled(true);
-    //         newObj->transform.position = Vec2D(-200+i*20.5f,300+j*20);
-    //         newObj->mass = 100;
-    //         newObj->momentOfInertia = 10000;
-    //         newObj->bounce = 0.1f;
-    //         //newObj->friction = 1.f;
-    //         //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*200;
-    //     }
-    // }
+            newObj->setPhysicsEnabled(true);
+            newObj->transform.position = Vec2D(-200+i*20.5f,300+j*20);
+            newObj->mass = 1;
+            newObj->momentOfInertia = 100;
+            newObj->bounce = 0.6f;
+            newObj->friction = 0.3f;
+            //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*200;
+        }
+    }
 
     // for (int j  = 0; j < 15; j++)
     // {
@@ -171,83 +200,18 @@ int main() {
 
   
     //newObj3->angularVelocity = -15.f;
-    auto* newObj4 = myScene.AddNewObject<GObject>();
-    auto* coll4 = newObj4->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 25);
-    //coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1, Vec2D(0,50));
-    newObj4->setPhysicsEnabled(true);
-    newObj4->transform.position = Vec2D(100, 50);
-    //newObj4->velocity = Vec2D(0,100);
-    newObj4->mass = 25;
-    newObj4->transform.rotation = 1.5f;
-    newObj4->momentOfInertia = 3000;
-    newObj4->bounce = 0.1f;
-    newObj4->friction = 1.f;
+    
 
-
-    auto* newObj = myScene.AddNewObject<GObject>();
-    auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 25);
-    //coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1, Vec2D(0,50));
-    newObj->setPhysicsEnabled(true);
-    newObj->transform.position = Vec2D(-10, 50);
-    //newObj->velocity = Vec2D(0,100);
-    newObj->mass = 25;
-    newObj->transform.rotation = 1.5f;
-    newObj->momentOfInertia = 3000;
-    newObj->bounce = 0.1f;
-    newObj->friction = 1.f;
-    //newObj->angularVelocity = 50.f;
-
-    auto* newObj3 = myScene.AddNewObject<GObject>();
-    coll = newObj3->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-    newObj3->setPhysicsEnabled(true);
-    newObj3->transform.position = Vec2D(45, 150);
-
-    auto* spring = newObj3->CreateComponent<GSpringComponent>(newObj);
-    spring->spring_constant = 500.f;
-    spring->constrainedAlongAxis = true;
-    spring->myAttachedPos = Vec2D(-55,0);
-    //spring->otherAttachedPos = Vec2D(0,25);
-    spring->attachDirection = Vec2D(0,-1);
-    spring->mean_length = 80.f;
-
-    auto* spring2 = newObj3->CreateComponent<GSpringComponent>(newObj4);
-    spring2->spring_constant = 500.f;
-    spring2->constrainedAlongAxis = true;
-    spring2->myAttachedPos = Vec2D(55,0);
-    //spring->otherAttachedPos = Vec2D(0,25);
-    spring2->attachDirection = Vec2D(0,-1);
-    spring2->mean_length = 80.f;
-
-    //newObj->velocity = Vec2D(0,-100);
-    newObj3->friction = 0.2f;
-    newObj3->mass = 1000;
-    //newObj->transform.rotation = 1.5f;
-    newObj3->momentOfInertia = 300000;
-    newObj3->bounce = 0.1f;
-    // auto* newObj = myScene.AddNewObject<GObject>();
-    // auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-    // coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 40, Vec2D(-80,-60));
-    // //coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 40, Vec2D(-80,60));
-    // coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 40, Vec2D(80,-60));
-
-    // newObj->setPhysicsEnabled(true);
-    // newObj->transform.position = Vec2D(-1800,400);
-    // newObj->friction = 0.1f;
-    // newObj->bounce = 0.9f;
-    // newObj->velocity = Vec2D(450,0);
-    // newObj->mass = 5000;
-    // newObj->momentOfInertia = 55000000;
-    //newObj->ro
-    //newObj->bounce = 0.6f;
-    //newObj->angularVelocity = 5;
+    //coll = newObj3->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 25, Vec2D(100,0));
+    //coll = newObj3->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 25, Vec2D(-100,0));
 
     myScene.Begin();
     while(window.isOpen())
     {
-        newObj4->angularVelocity = 5.f;
-        newObj->angularVelocity = 5.f;
+        scrollx = myScene.player->transform.position.X;
+        myScene.terrainStart = round((scrollx-250)/myScene.terrainPointSpacing);
         auto start = std::chrono::steady_clock::now();
-        //std::this_thread::sleep_for(std::chrono::milliseconds(7));
+        std::this_thread::sleep_for(std::chrono::milliseconds(6));
 
         sf::Vector2f pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         Vec2D posVec = Vec2D(pos.x, pos.y);
@@ -259,6 +223,21 @@ int main() {
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed) window.close();
+
+            if (event.type == sf::Event::KeyPressed)
+            {
+                // Check specific keys
+                if (event.key.code == sf::Keyboard::Left)
+                {
+                    myScene.leftWheel->angularVelocity = 25.f;
+                    myScene.rightWheel->angularVelocity = 25.f;
+                }
+                else if (event.key.code == sf::Keyboard::Right)
+                {
+                    myScene.leftWheel->angularVelocity = -25.f;
+                    myScene.rightWheel->angularVelocity = -25.f;
+                }
+            }
         }
         window.clear();
         //newObj->transform.calculateCosAndSine();
@@ -272,7 +251,7 @@ int main() {
         window.display(); 
         auto end = std::chrono::steady_clock::now();
         duration = end - start;
-       // std::cout << "fps:" << 1000/duration.count() << std::endl;
+      std::cout << "fps:" << 1000/duration.count() << std::endl;
     
         
         
@@ -285,12 +264,13 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
 {
     for (auto& obj : scene->sceneObjects)
     {
+        sf::Color mycolor =  obj->my_id == 1 ? sf::Color::Yellow : sf::Color::Red;
         for (auto& coll : obj->myComponents)
         {
             if (typeid(GColliderComp) == typeid(*coll))
             {
                 auto* col = dynamic_cast<GColliderComp*>(coll.get());
-                //std::cout << col->myColliderType << std::endl;
+                
                 if (col->myColliderType == GColliderComp::ColliderType::Polygon)
                 {
                     sf::ConvexShape polygon;
@@ -303,7 +283,7 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
                     }  
                     polygon.setFillColor(sf::Color::Transparent); 
                     
-                    polygon.setOutlineColor(obj->getPhysicsEnabled() ?  sf::Color::Red : sf::Color::Blue); 
+                    polygon.setOutlineColor(obj->getPhysicsEnabled() ?  mycolor : sf::Color::Blue); 
                     polygon.setOutlineThickness(2.f);
                     window->draw(polygon); 
 
@@ -368,7 +348,7 @@ Vec2D convertScreenToWorld(Vec2D screenPos, int screenwidth, int screenheight)
 
 Vec2D convertWorldToScreen(Vec2D worldPos, int screenwidth, int screenheight)
 {
-    return Vec2D(worldPos.X+screenwidth/2, (-worldPos.Y)+screenheight/2);
+    return Vec2D((worldPos.X-scrollx)+screenwidth/2, (-worldPos.Y+scrolly)+screenheight/2);
 }
 
 

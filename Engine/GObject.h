@@ -3,9 +3,14 @@
 
 #include "Vec2D.h"
 #include "GTransform.h"
+#include "GPhysics.h"
 #include "GComponent.h"
 #include <vector>
 #include <memory>
+#include "ColliderComp.h"
+
+// #include <stdio.h>
+// #include <iostream>
 /*
 An object that will exist in a scene
 Every object will have a transform and the physicsEnabled flag.
@@ -16,7 +21,7 @@ class GObject{
     GTransform transform;
     Vec2D velocity; //world space velocity
     float angularVelocity;
-
+    int my_id = 0;
     GScene* myScene;
     //physics collision paramters
     float mass;
@@ -24,6 +29,7 @@ class GObject{
     float bounce; //coefficient of restitution
     float friction;
 
+    bool enabled;
     GObject(GScene* scene)
     {
         physicsEnabled = false;
@@ -40,6 +46,8 @@ class GObject{
     void Begin() {};
 
     void Tick(float DeltaTime) {};
+
+    void OnCollision(GPhysics::Collision col, GColliderComp* otherObj) { };
 
     virtual ~GObject() = default;
 

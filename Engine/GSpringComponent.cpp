@@ -31,7 +31,7 @@ void GSpringComponent::Tick(float deltaTime)
             else
             {
                 //constrain
-               Vec2D normal = Vec2D::GetPerpendicular(worldSpaceTargetDir);
+                Vec2D normal = Vec2D::GetPerpendicular(worldSpaceTargetDir);
 
                 normal.normalize(); 
 
@@ -47,7 +47,7 @@ void GSpringComponent::Tick(float deltaTime)
 
                 float C = Vec2D::DotProduct(myPointWorld - otherPointWorld, normal);
 
-                const float beta = 0.2f;
+                const float beta = 0.1f;
                 float bias = beta * C / deltaTime;
 
                 Cdot += bias;
@@ -67,10 +67,11 @@ void GSpringComponent::Tick(float deltaTime)
                 Vec2D impulse = normal * lambda;
 
                 gobject->myScene->physics.AddImpulseAtLocation(
-                    gobject, myPointWorld, impulse);
+                  gobject, myPointWorld, impulse);
 
                 gobject->myScene->physics.AddImpulseAtLocation(
-                    otherObject, otherPointWorld, -impulse);
+                 otherObject, otherPointWorld, -impulse);
+                
 
 
                 //spring mechanics
@@ -78,9 +79,49 @@ void GSpringComponent::Tick(float deltaTime)
                 float projected = -Vec2D::DotProduct(worldSpaceDir, worldSpaceTargetDir);
                 float dist = -(mean_length - (projected));
                 worldSpaceDir.normalize();
-                std::cout << dist  << "  " << projected << std::endl;
+                
                 gobject->myScene->physics.AddImpulseAtLocation(gobject, myPointWorld, worldSpaceTargetDir*dist*spring_constant*deltaTime);
                 gobject->myScene->physics.AddImpulseAtLocation(otherObject, otherPointWorld, -worldSpaceTargetDir*dist*spring_constant*deltaTime);
+
+                
+                //max and min length constrain
+                if (projected > maxLength)
+                {
+                    otherObject->transform.position = worldSpaceTargetDir*maxLength + myPointWorld;
+                    //std::cout << dist  << "  " << projected << std::endl;
+                }
+
+                // if (projected < minLength)
+                // {
+                //     otherObject->transform.position = worldSpaceTargetDir*minLength + myPointWorld;
+                //     //std::cout << dist  << "  " << projected << std::endl;
+                // }
+
+
+                //positional constrain
+                const float slop = 0.001f;
+                const float percent = 0.1f;
+                float Cpos = Vec2D::DotProduct(myPointWorld - otherPointWorld, normal);
+
+                // ignore very small errors
+                if (fabs(Cpos) < slop)
+                    return;
+
+                float lambdaPos = -(percent * Cpos) / invEffectiveMass;
+
+                Vec2D P = normal * lambdaPos;
+
+                // linear
+                gobject->transform.position += P * (1.0f / gobject->mass);
+                otherObject->transform.position -= P * (1.0f / otherObject->mass);
+
+                // // angular
+                // float wA = Vec2D::CrossProduct(r_me, P) / gobject->momentOfInertia;
+                // float wB = Vec2D::CrossProduct(r_other, P) / otherObject->momentOfInertia;
+
+                // gobject->transform.rotation += wA;
+                // otherObject->transform.rotation -= wB;
+
             }            
         }
     }

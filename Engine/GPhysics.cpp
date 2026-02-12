@@ -69,7 +69,13 @@ void GPhysics::BroadPhase()
 
                     if (col.colliding)
                     {
+                        if (!col.col1->trigger && !col.col2->trigger)
                         HandleCollision(col);
+
+                        if (col.col1->notify_collision)
+                            col.col1->gobject->OnCollision(col, col.col2);
+                        if (col.col2->notify_collision)
+                            col.col2->gobject->OnCollision(col, col.col1);
                     }
                     //GetColl(gColliders[A], gColliders[B]);
                 }
@@ -179,7 +185,7 @@ GPhysics::Collision GPhysics::GetCollisionBetweenObjects(GColliderComp *obj1, GC
                     }
                     if (o2->myColliderType == GColliderComp::ColliderType::Circle)
                     {
-                        col.point = center2 - axis*o2->circleRadius;
+                        col.point = center2 - overlapNormal*o2->circleRadius;
                     }
                 }
             }
@@ -333,6 +339,7 @@ void GPhysics::HandleCollision(Collision col)
 
             col.col2->gobject->transform.position = col.col2->gobject->transform.position + col.normal*col.depth; 
             float vel_normal_scalar = Vec2D::DotProduct(col.normal, vel_at_hit_point);
+            if (vel_normal_scalar > 0) return;
             Vec2D normalVel = col.normal*vel_normal_scalar;
 
             //applying coefficient of restitution formula
@@ -341,11 +348,17 @@ void GPhysics::HandleCollision(Collision col)
             float invMass = (1.f/col.col2->gobject->mass) + (rxn*rxn)/col.col2->gobject->momentOfInertia;
             j /= invMass;
             AddImpulseAtLocation(col.col2->gobject, col.point, -col.normal*j);
-
+            vel_at_hit_point = col.col2->gobject->velocity_at_point(col.point);
             //friction
             float avg_friction = (col.col1->gobject->friction + col.col2->gobject->friction)/2;
             Vec2D tangent = Vec2D::GetPerpendicular(col.normal);
 
+            //Vec2D tangent = (vel_at_hit_point - col.normal * Vec2D::DotProduct(vel_at_hit_point, col.normal));
+            if (tangent.magnitude() < 1e-6f)
+            return;
+            tangent.normalize();
+            
+            //tangent = -tangent;
             float rxt = Vec2D::CrossProduct(r, tangent);
             float invMassTang = (1.f/col.col2->gobject->mass) + (rxt*rxt)/col.col2->gobject->momentOfInertia;
             float jt = Vec2D::DotProduct(vel_at_hit_point, tangent)/invMassTang;
@@ -353,12 +366,11 @@ void GPhysics::HandleCollision(Collision col)
             //if (maxFric < 0) maxFric = -maxFric;
             jt = std::clamp(jt, -maxFric, maxFric);
             // float vel_along_tangent = Vec2D::DotProduct(tangent, vel_at_hit_point);
-            // if (vel_along_tangent > 0)
-            // {
-            //     tangent = -tangent;
-            //     vel_along_tangent = - vel_along_tangent;
-            // }
-            AddImpulseAtLocation(col.col2->gobject, col.point, tangent*(-jt));//*normalVel.magnitude()*avg_friction);
+            
+            AddImpulseAtLocation(col.col2->gobject, col.point, tangent*(-jt));
+            //std::cout << tangent.X << " - " << tangent.Y << ":  " << vel_at_hit_point.X<< " - " << vel_at_hit_point.Y << std::endl;
+
+            //std::cout << col.col2->gobject->angularVelocity << std::endl;
         }
     }
     else
@@ -373,7 +385,7 @@ void GPhysics::HandleCollision(Collision col)
             col.col1->gobject->transform.position = col.col1->gobject->transform.position - col.normal*col.depth;   
             Vec2D normalVel = col.normal*Vec2D::DotProduct(col.normal, vel_at_hit_point);
             float vel_normal_scalar = Vec2D::DotProduct(col.normal, vel_at_hit_point);
-
+            if (vel_normal_scalar < 0) return;
             //coeff of restitution formula j = -(1+e)*v
             float rxn = Vec2D::CrossProduct(r, col.normal);
             float j = multiplier * vel_normal_scalar;
@@ -383,6 +395,7 @@ void GPhysics::HandleCollision(Collision col)
 
             //implimenting friction
             float avg_friction = (col.col1->gobject->friction + col.col2->gobject->friction)/2;
+
             Vec2D tangent = Vec2D::GetPerpendicular(col.normal);
             float vel_along_tangent = Vec2D::DotProduct(tangent, vel_at_hit_point);
 
@@ -391,16 +404,16 @@ void GPhysics::HandleCollision(Collision col)
             float jt = Vec2D::DotProduct(vel_at_hit_point, tangent)/invMassTang;
             float maxFric = avg_friction*std::abs(j);
             //if (maxFric < 0) maxFric = -maxFric;
-            jt = std::clamp(jt, -maxFric, maxFric);
+            jt = -std::clamp(jt, -maxFric, maxFric);
 
             // if (vel_along_tangent > 0)
             // {
             //     tangent = -tangent;
             //     vel_along_tangent = - vel_along_tangent;
             // }
-            AddImpulseAtLocation(col.col1->gobject, col.point, tangent*jt);//normalVel.magnitude()*avg_friction);
+           AddImpulseAtLocation(col.col1->gobject, col.point, tangent*jt);//normalVel.magnitude()*avg_friction);
 
-            //std::cout << normalVel.magnitude() << std::endl;
+            // std::cout << jt << std::endl;
         }
 
         //both objects are rigid bodies
@@ -435,7 +448,8 @@ void GPhysics::HandleCollision(Collision col)
 
             AddImpulseAtLocation(col.col1->gobject, col.point, -col.normal*j);
             AddImpulseAtLocation(col.col2->gobject, col.point, col.normal*j);
-
+            
+            //friction
             float avg_friction = (col.col1->gobject->friction + col.col2->gobject->friction)/2;
             Vec2D tangent = Vec2D::GetPerpendicular(col.normal);
             

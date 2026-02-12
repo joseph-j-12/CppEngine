@@ -10,4 +10,5 @@
 #include "Engine/GPhysics.h"
 #include "Engine/GSpatialHash.h"
 #include "Engine/GSpringComponent.h"
+#include "CarScene.h"
 #endif

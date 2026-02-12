@@ -54,6 +54,19 @@ class Vec2D{
         return Vec2D(X*v.X, Y*v.Y);
     }
 
+    Vec2D operator+=(const Vec2D &v)
+    {
+        X += v.X;
+        Y += v.Y;
+        return *this;
+    }
+    Vec2D operator-=(const Vec2D &v)
+    {
+        X -= v.X;
+        Y -= v.Y;
+        return *this;
+    }
+
     Vec2D operator*(const float num)
     {
         return Vec2D(X*num, Y*num);

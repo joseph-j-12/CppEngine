@@ -21,7 +21,7 @@ void GScene::Tick_Objects(float DeltaTime)
 {
     for (auto& obj : sceneObjects)
     {
-        //obj->Tick(DeltaTime);
+        obj->Tick(DeltaTime);
         for (auto& comp : obj->myComponents)
         {
             comp->Tick(DeltaTime);
