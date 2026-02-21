@@ -10,5 +10,6 @@
 #include "Engine/GPhysics.h"
 #include "Engine/GSpatialHash.h"
 #include "Engine/GSpringComponent.h"
+#include "Engine/GCamera.h"
 #include "CarScene.h"
 #endif

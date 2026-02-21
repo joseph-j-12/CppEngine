@@ -2,12 +2,13 @@
 #include "GObject.h"
 #include "GScene.h"
 #include "GPhysics.h"
-#include <iostream>
+// #include <iostream>
 GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, float radius, Vec2D center) : GComponent(myParentObject)
 {
     myColliderType = col;
     circleRadius = radius;
     myCenter = center;
+    _myCompType = GComponent::ComponentType::Collider;
 }
 
 GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, ColliderShapeTemplate *shape, Vec2D center) : GComponent(myParentObject)
@@ -15,6 +16,7 @@ GColliderComp::GColliderComp(GObject *myParentObject, ColliderType col, Collider
     myShape = shape;
     myColliderType = col;
     myCenter = center;
+    _myCompType = GComponent::ComponentType::Collider;
 }
 
 bool GColliderComp::CalculateBoundingBox()

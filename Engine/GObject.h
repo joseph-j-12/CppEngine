@@ -43,11 +43,11 @@ class GObject{
         
     }
 
-    void Begin() {};
+    virtual void Begin() {};
 
-    void Tick(float DeltaTime) {};
+    virtual void Tick(float DeltaTime) {};
 
-    void OnCollision(GPhysics::Collision col, GColliderComp* otherObj) { };
+    virtual void OnCollision(GPhysics::Collision col, GColliderComp* otherObj) { };
 
     virtual ~GObject() = default;
 

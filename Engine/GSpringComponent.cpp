@@ -1,8 +1,10 @@
 #include "GSpringComponent.h"
 #include "GObject.h"
 #include "GScene.h"
+#include <algorithm>
+#include <cmath>
 
-#include <iostream>
+// #include <iostream>
 
 void GSpringComponent::Begin()
 {
@@ -80,8 +82,10 @@ void GSpringComponent::Tick(float deltaTime)
                 float dist = -(mean_length - (projected));
                 worldSpaceDir.normalize();
                 
-                gobject->myScene->physics.AddImpulseAtLocation(gobject, myPointWorld, worldSpaceTargetDir*dist*spring_constant*deltaTime);
-                gobject->myScene->physics.AddImpulseAtLocation(otherObject, otherPointWorld, -worldSpaceTargetDir*dist*spring_constant*deltaTime);
+                float force = dist*spring_constant;
+                //force = std::clamp(force, -5000.f,5000.f);
+                gobject->myScene->physics.AddImpulseAtLocation(gobject, myPointWorld, worldSpaceTargetDir*force*deltaTime);
+                gobject->myScene->physics.AddImpulseAtLocation(otherObject, otherPointWorld, -worldSpaceTargetDir*force*deltaTime);
 
                 
                 //max and min length constrain
@@ -91,11 +95,11 @@ void GSpringComponent::Tick(float deltaTime)
                     //std::cout << dist  << "  " << projected << std::endl;
                 }
 
-                // if (projected < minLength)
-                // {
-                //     otherObject->transform.position = worldSpaceTargetDir*minLength + myPointWorld;
-                //     //std::cout << dist  << "  " << projected << std::endl;
-                // }
+                if (projected < minLength)
+                {
+                    otherObject->transform.position = worldSpaceTargetDir*minLength + myPointWorld;
+                    //std::cout << dist  << "  " << projected << std::endl;
+                }
 
 
                 //positional constrain

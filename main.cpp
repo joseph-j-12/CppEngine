@@ -9,18 +9,18 @@
 
 sf::Color hsvToRgb(float h, float s, float v);
 
-Vec2D convertScreenToWorld(Vec2D screenPos, int screenwidth = 840, int screenheight= 680);
-Vec2D convertWorldToScreen(Vec2D worldPos, int screenwidth = 840, int screenheight= 680);
+Vec2D convertScreenToWorld(Vec2D screenPos, int screenwidth = 320, int screenheight= 240);
+Vec2D convertWorldToScreen(Vec2D worldPos, int screenwidth = 320, int screenheight= 240);
 void renderColliders(GScene* scene, sf::RenderWindow *window);
 
-int screenW = 840;
-int screenH = 680;
+int screenW = 320;
+int screenH = 240;
 
 float scrollx = 0;
 float scrolly = 0;
 int main() {
 
-    sf::RenderWindow window(sf::VideoMode(840,680),"app");
+    sf::RenderWindow window(sf::VideoMode(320,240),"app");
 
     CarScene myScene;
     
@@ -204,15 +204,18 @@ int main() {
 
     //coll = newObj3->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 25, Vec2D(100,0));
     //coll = newObj3->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 25, Vec2D(-100,0));
-
+    GCamera cam;
     myScene.Begin();
+    cam.trackingTarget = myScene.player;
     while(window.isOpen())
     {
-        scrollx = myScene.player->transform.position.X;
-        myScene.terrainStart = round((scrollx-250)/myScene.terrainPointSpacing);
+        scrollx = cam.position.X;// += (myScene.player->transform.position.X - scrollx)*0.08;
+        scrolly = cam.position.Y; //+= (myScene.player->transform.position.Y - scrolly)*0.01;
+
+        myScene.terrainStart = round((scrollx-25)/myScene.terrainPointSpacing);
         auto start = std::chrono::steady_clock::now();
         std::this_thread::sleep_for(std::chrono::milliseconds(6));
-
+        cam.Tick(0.0016f);
         sf::Vector2f pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         Vec2D posVec = Vec2D(pos.x, pos.y);
         posVec = convertScreenToWorld(posVec, 640,480);        
@@ -251,7 +254,7 @@ int main() {
         window.display(); 
         auto end = std::chrono::steady_clock::now();
         duration = end - start;
-      std::cout << "fps:" << 1000/duration.count() << std::endl;
+    //   std::cout << "fps:" << 1000/duration.count() << std::endl;
     
         
         

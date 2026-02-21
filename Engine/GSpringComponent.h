@@ -21,6 +21,7 @@ class GSpringComponent :  public GComponent{
     {
         gobject = myParentObject;
         otherObject = attachedTo;
+        _myCompType = GComponent::ComponentType::Spring;
     }
 
     Vec2D myAttachedPos; //this object local space

@@ -20,6 +20,12 @@ class GComponent{
     {
         gobject = myParentObject;
     }
+    
+    enum ComponentType{
+        Collider,
+        Spring
+    };
+
     virtual ~GComponent() = default;
 
     virtual void Begin(){};
@@ -37,6 +43,7 @@ class GComponent{
     }
     
     GObject *gobject;
+    ComponentType _myCompType;
     private:
     bool componentEnabled;
     

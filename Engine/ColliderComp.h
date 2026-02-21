@@ -14,6 +14,10 @@ class GObject;
 struct ColliderShapeTemplate{
     int numPoints;
     Vec2D *points;
+    ~ColliderShapeTemplate()
+    {
+        delete[] points;
+    }
 };
 
 class GColliderComp : public GComponent{
@@ -40,6 +44,9 @@ class GColliderComp : public GComponent{
 
     Vec2D boundingBoxMax;
     Vec2D boundingBoxMin;
+
+    Vec2D lastSeenBoundingBoxMin;
+    Vec2D lastSeenBoundingBoxMax;
     
 };
 #endif
