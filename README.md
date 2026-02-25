@@ -232,9 +232,27 @@ The physics engine itself has **no dependency on rendering logic** and can be re
 
 
 
-## TODO
+## Other Components
 
-- Create a collision notification system so that objects can get to know when they encounter a collision.
+### SpringComponent
+
+This example creates a spring that behaves like a suspension. It is attached from the player to the leftWheel object.
+constrainAlongAxis flag will make it behave it like a suspension. If it is false, it will simply apply a force based onm distance no matter what direction it is.
+attachDirection is the direction of spring in local space. 
+myAttachedPos is the point it is attached in.
+otherAttachedPos is the point it is attached on the other object (wheel) in the local space of the other object.
+
+
+```cpp
+auto* spring = player->CreateComponent<GSpringComponent>(leftWheel);
+spring->spring_constant = 3000.f;
+spring->constrainedAlongAxis = true;
+spring->myAttachedPos = Vec2D(-25,0);
+spring->attachDirection = Vec2D(0,-1);
+spring->mean_length = 30.f;
+spring->minLength = 14;
+spring->maxLength = 155;
+```
   
 
 
