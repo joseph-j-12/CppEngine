@@ -11,7 +11,7 @@ sf::Color hsvToRgb(float h, float s, float v);
 
 Vec2D convertScreenToWorld(Vec2D screenPos, int screenwidth = 320, int screenheight= 240);
 Vec2D convertWorldToScreen(Vec2D worldPos, int screenwidth = 320, int screenheight= 240);
-void renderColliders(GScene* scene, sf::RenderWindow *window);
+void renderColliders(GScene* scene, sf::RenderWindow *window, GCamera* ca);
 
 int screenW = 320;
 int screenH = 240;
@@ -23,163 +23,29 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(320,240),"app");
 
     CarScene myScene;
-    
-
-
-    // ColliderShapeTemplate shapetemplate1;
-    // shapetemplate1.numPoints = 4;
-    // shapetemplate1.points = new Vec2D[4];//(Vec2D*)malloc(4*sizeof(Vec2D));
-
-    // shapetemplate1.points[0].X = -10;
-    // shapetemplate1.points[0].Y = -10;
-
-    // shapetemplate1.points[1].X = -10;
-    // shapetemplate1.points[1].Y = 10;
-    
-    // shapetemplate1.points[2].X = 10;
-    // shapetemplate1.points[2].Y = 10;
-
-    // shapetemplate1.points[3].X = 10;
-    // shapetemplate1.points[3].Y = -10;
-
-
-    // ColliderShapeTemplate shapetemplate3;
-    // shapetemplate3.numPoints = 7;
-    // shapetemplate3.points = new Vec2D[7];
-    // for (int i = 0; i < 7; i++)
-    // {
-    //     shapetemplate3.points[i] = Vec2D(30*std::cos(i*6.28f/7),30*std::sin(i*6.28f/7));
-    // }
-
-
-    // ColliderShapeTemplate staticObject;
-    // staticObject.numPoints = 4;
-    // staticObject.points = new Vec2D[4];
-
-    // staticObject.points[3].X = -105;
-    // staticObject.points[3].Y = -25;
-
-    // staticObject.points[2].X = -105;
-    // staticObject.points[2].Y = 25;
-    
-    // staticObject.points[1].X = 105;
-    // staticObject.points[1].Y = 25;
-
-    // staticObject.points[0].X = 105;
-    // staticObject.points[0].Y = -25;
-
-    // ColliderShapeTemplate staticObject2;
-    // staticObject2.numPoints = 4;
-    // staticObject2.points = new Vec2D[4];
-
-    // staticObject2.points[0].X = -25;
-    // staticObject2.points[0].Y = -25;
-
-    // staticObject2.points[1].X = -25;
-    // staticObject2.points[1].Y = 25;
-    
-    // staticObject2.points[2].X = 25;
-    // staticObject2.points[2].Y = 25;
-
-    // staticObject2.points[3].X = 25;
-    // staticObject2.points[3].Y = -25;
 
     std::chrono::duration<double, std::milli> duration;
 
-    // auto* newObj2 = myScene.AddNewObject<GObject>();
 
-    // newObj2->transform.position = Vec2D(-100,-170);
-    // newObj2->transform.rotation =- 0.3f;
-    // newObj2->friction = 0.9f;
-    // newObj2->bounce = 0.3f;
+    // for (int i = 0;i < 3; i++)
+    // {
+    //     for (int j  = 0; j < 50; j++)
+    //     {
+    //         auto* newObj = myScene.AddNewObject<GObject>();
+    //        // if ((i+j)%2 == 0)
+    //         auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 5);
+    //         //else
+    //         //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
 
-    // auto* coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-
-    // newObj2 = myScene.AddNewObject<GObject>();
-    // newObj2->transform.position = Vec2D(-255,-100);
-    // newObj2->transform.rotation = -0.6f;
-    // newObj2->friction = 0.9f;
-    // newObj2->bounce = 0.3f;
-    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-
-
-    // // newObj2 = myScene.AddNewObject<GObject>();
-    // // newObj2->transform.position = Vec2D(100,100);
-    // // newObj2->transform.rotation = 0.6f;
-    // // newObj2->friction = 1.8f;
-    // // newObj2->bounce = 0.8f;
-    // // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-
-
-
-    // newObj2 = myScene.AddNewObject<GObject>();
-    // newObj2->transform.position = Vec2D(55,-210);
-    // newObj2->transform.rotation = -0.2f;
-    // newObj2->friction = 0.9f;
-    // newObj2->bounce = 0.8f;
-    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-
-    // newObj2 = myScene.AddNewObject<GObject>();
-    // newObj2->transform.position = Vec2D(205,-220);
-    // newObj2->transform.rotation = 0.0f;
-    // newObj2->friction = 0.9f;
-    // newObj2->bounce = 0.8f;
-    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-
-    // newObj2 = myScene.AddNewObject<GObject>();
-    // newObj2->transform.position = Vec2D(305,-220);
-    // newObj2->transform.rotation = 0.4f;
-    // newObj2->friction = 0.9f;
-    // newObj2->bounce = 0.8f;
-    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-
-    // // newObj2 = myScene.AddNewObject<GObject>();
-    // // newObj2->transform.position = Vec2D(-30,-190);
-    // // newObj2->transform.rotation = 0.4f;
-    // // newObj2->friction = 1.f;
-    // // newObj2->bounce = 0.8f;
-    // // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject2);
-
-    // newObj2 = myScene.AddNewObject<GObject>();
-    // newObj2->transform.position = Vec2D(405,-120);
-    // newObj2->transform.rotation = 1.4f;
-    // newObj2->friction = 0.9f;
-    // newObj2->bounce = 0.8f;
-    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-
-
-    // newObj2 = myScene.AddNewObject<GObject>();
-    // newObj2->transform.position = Vec2D(-325,50);
-    // newObj2->transform.rotation = 1.4f;
-    // newObj2->friction = 0.9f;
-    // newObj2->bounce = 0.8f;
-    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &staticObject);
-    // newObj2 = myScene.AddNewObject<GObject>();
-    // newObj2->transform.position = Vec2D(-0,30);
-    // MATLAB Function1newObj2->friction = 0.2f;
-    // newObj2->bounce = 0.3f;
-    // newObj2->transform.rotation = 0.78f;
-    // coll2 = newObj2->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 30);
-
-    for (int i = 0;i < 3; i++)
-    {
-        for (int j  = 0; j < 50; j++)
-        {
-            auto* newObj = myScene.AddNewObject<GObject>();
-           // if ((i+j)%2 == 0)
-            auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 5);
-            //else
-            //auto* coll = newObj->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Polygon, &shapetemplate1);
-
-            newObj->setPhysicsEnabled(true);
-            newObj->transform.position = Vec2D(-200+i*20.5f,300+j*20);
-            newObj->mass = 1;
-            newObj->momentOfInertia = 100;
-            newObj->bounce = 0.6f;
-            newObj->friction = 0.3f;
-            //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*200;
-        }
-    }
+    //         newObj->setPhysicsEnabled(true);
+    //         newObj->transform.position = Vec2D(-200+i*20.5f,300+j*20);
+    //         newObj->mass = 1;
+    //         newObj->momentOfInertia = 100;
+    //         newObj->bounce = 0.6f;
+    //         newObj->friction = 0.3f;
+    //         //newObj->angularVelocity = (-1+ ((i+j)%2)*2)*200;
+    //     }
+    // }
 
     // for (int j  = 0; j < 15; j++)
     // {
@@ -204,13 +70,17 @@ int main() {
 
     //coll = newObj3->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 25, Vec2D(100,0));
     //coll = newObj3->CreateComponent<GColliderComp>(GColliderComp::ColliderType::Circle, 25, Vec2D(-100,0));
-    GCamera cam;
+    GCamera cam(&myScene);
+    myScene.cam.screenSize = Vec2D(320,240);
     myScene.Begin();
-    cam.trackingTarget = myScene.player;
+    myScene.cam.trackingTarget = myScene.player;
+    myScene.cam.trackingSpeed = Vec2D(3.f, 1.f);
+    myScene.cam.zoom = 0.8f;
+    myScene.cam.maxTrackDistance = 100;
     while(window.isOpen())
     {
-        scrollx = cam.position.X;// += (myScene.player->transform.position.X - scrollx)*0.08;
-        scrolly = cam.position.Y; //+= (myScene.player->transform.position.Y - scrolly)*0.01;
+        scrollx = myScene.cam.position.X;// += (myScene.player->transform.position.X - scrollx)*0.08;
+        scrolly = myScene.cam.position.Y; //+= (myScene.player->transform.position.Y - scrolly)*0.01;
 
         myScene.terrainStart = round((scrollx-25)/myScene.terrainPointSpacing);
         auto start = std::chrono::steady_clock::now();
@@ -249,7 +119,7 @@ int main() {
 
         myScene.Tick_Physics(duration.count() == 0 ? 0.00016 : 3.f*duration.count()/1000);
         myScene.Tick_Objects(duration.count() == 0 ? 0.00016 : 3.f*duration.count()/1000);
-        renderColliders(&myScene, &window);
+        renderColliders(&myScene, &window, &myScene.cam);
       
         window.display(); 
         auto end = std::chrono::steady_clock::now();
@@ -263,10 +133,11 @@ int main() {
     return 0;
 }
 
-void renderColliders(GScene* scene, sf::RenderWindow *window)
+void renderColliders(GScene* scene, sf::RenderWindow *window, GCamera* cam)
 {
     for (auto& obj : scene->sceneObjects)
     {
+        if (!obj->enabled) continue;
         sf::Color mycolor =  obj->my_id == 1 ? sf::Color::Yellow : sf::Color::Red;
         for (auto& coll : obj->myComponents)
         {
@@ -281,7 +152,7 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
                     
                     for (int i = 0; i < col->myShape->numPoints; i++)
                     {
-                        Vec2D p1 = convertWorldToScreen(obj->transform.local_to_scene(col->myShape->points[i] + col->myCenter));
+                        Vec2D p1 = cam->convertWorldToScreen(obj->transform.local_to_scene(col->myShape->points[i] + col->myCenter));
                         polygon.setPoint(i,sf::Vector2f(p1.X,p1.Y));    
                     }  
                     polygon.setFillColor(sf::Color::Transparent); 
@@ -292,8 +163,8 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
 
                     sf::RectangleShape bound;
                     col->CalculateBoundingBox();
-                    Vec2D bTop = convertWorldToScreen(Vec2D(col->boundingBoxMin.X, col->boundingBoxMax.Y));
-                    Vec2D bBottom = convertWorldToScreen(Vec2D(col->boundingBoxMax.X, col->boundingBoxMin.Y));
+                    Vec2D bTop = cam->convertWorldToScreen(Vec2D(col->boundingBoxMin.X, col->boundingBoxMax.Y));
+                    Vec2D bBottom = cam->convertWorldToScreen(Vec2D(col->boundingBoxMax.X, col->boundingBoxMin.Y));
                     //std::cout << bBottom.Y << "-" << bTop.Y << std::endl;
                     bound.setPosition(bTop.X, bTop.Y);
                     bound.setSize(sf::Vector2(bBottom.X-bTop.X, bBottom.Y-bTop.Y));
@@ -305,17 +176,17 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
                 }
                 else if (col->myColliderType == GColliderComp::ColliderType::Circle)
                 {
-                    sf::CircleShape circle(col->circleRadius);
+                    sf::CircleShape circle(col->circleRadius*cam->zoom);
                     circle.setFillColor(sf::Color::Green); // Set the fill color to green
-                    Vec2D pos = convertWorldToScreen(col->gobject->transform.local_to_scene(col->myCenter));
-                    circle.setPosition(pos.X-col->circleRadius, pos.Y-col->circleRadius);
+                    Vec2D pos = cam->convertWorldToScreen(col->gobject->transform.local_to_scene(col->myCenter));
+                    circle.setPosition(pos.X-col->circleRadius*cam->zoom, pos.Y-col->circleRadius*cam->zoom);
                     circle.setOutlineColor(obj->getPhysicsEnabled() ?  sf::Color::Red : sf::Color::Blue); // Set a red outline color
                     circle.setFillColor(sf::Color::Transparent);
                     circle.setOutlineThickness(1.f);
                     window->draw(circle);
 
                     Vec2D linePos = col->gobject->transform.local_to_scene(col->myCenter+Vec2D(col->circleRadius,0));
-                    Vec2D linescenepos = convertWorldToScreen(linePos);
+                    Vec2D linescenepos = cam->convertWorldToScreen(linePos);
                     sf::Vertex line[] =
                     {
                         sf::Vertex(sf::Vector2f(pos.X, pos.Y)), // Start point (x1, y1)
@@ -328,10 +199,11 @@ void renderColliders(GScene* scene, sf::RenderWindow *window)
             else if (typeid(GSpringComponent) == typeid(*coll))
             {
                 auto* spring = dynamic_cast<GSpringComponent*>(coll.get());
+                if (!spring->gobject->enabled || !spring->otherObject->enabled) continue;
                 Vec2D linePos = spring->gobject->transform.local_to_scene(spring->myAttachedPos);
                 Vec2D linePos2 = spring->otherObject->transform.local_to_scene(spring->otherAttachedPos);
-                Vec2D linescenepos1 = convertWorldToScreen(linePos);
-                Vec2D linescenepos2 = convertWorldToScreen(linePos2);
+                Vec2D linescenepos1 = cam->convertWorldToScreen(linePos);
+                Vec2D linescenepos2 = cam->convertWorldToScreen(linePos2);
                 sf::Vertex line[] =
                 {
                     sf::Vertex(sf::Vector2f(linescenepos2.X, linescenepos2.Y)), // Start point (x1, y1)

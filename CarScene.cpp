@@ -120,7 +120,7 @@ void CarScene::Begin()
     spring->constrainedAlongAxis = true;
     spring->attachDirection = Vec2D(0,1);
     head->transform.position = Vec2D(45, 225);
-    
+    head->enabled = false;
 
     GScene::Begin();
 }

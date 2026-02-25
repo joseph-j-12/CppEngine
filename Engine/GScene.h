@@ -6,6 +6,7 @@
 #include "GObject.h"
 #include <memory>
 #include "GPhysics.h"
+#include "GCamera.h"
 /*
 Scene contains all the objects. It runs the tick for all the objects and components. 
 It connects rigidbodies and physics and also handles searching for children of an object
@@ -21,7 +22,7 @@ class GScene{
     void Begin();
 
     GPhysics physics;
-
+    GCamera cam;
     std::vector<std::unique_ptr<GObject>> GetChildrenOf(GObject* parentObj);
 
     template<typename T, typename... Args> T* AddNewObject(Args&&... args)

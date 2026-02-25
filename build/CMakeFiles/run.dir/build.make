@@ -114,19 +114,19 @@ CMakeFiles/run.dir/Engine/GScene.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/run.dir/Engine/GScene.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/joseph/Documents/Github/CppEngine/Engine/GScene.cpp -o CMakeFiles/run.dir/Engine/GScene.cpp.s
 
-CMakeFiles/run.dir/Engine/ColliderComp.cpp.o: CMakeFiles/run.dir/flags.make
-CMakeFiles/run.dir/Engine/ColliderComp.cpp.o: /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.cpp
-CMakeFiles/run.dir/Engine/ColliderComp.cpp.o: CMakeFiles/run.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joseph/Documents/Github/CppEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/run.dir/Engine/ColliderComp.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/run.dir/Engine/ColliderComp.cpp.o -MF CMakeFiles/run.dir/Engine/ColliderComp.cpp.o.d -o CMakeFiles/run.dir/Engine/ColliderComp.cpp.o -c /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.cpp
+CMakeFiles/run.dir/Engine/GColliderComp.cpp.o: CMakeFiles/run.dir/flags.make
+CMakeFiles/run.dir/Engine/GColliderComp.cpp.o: /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.cpp
+CMakeFiles/run.dir/Engine/GColliderComp.cpp.o: CMakeFiles/run.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joseph/Documents/Github/CppEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/run.dir/Engine/GColliderComp.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/run.dir/Engine/GColliderComp.cpp.o -MF CMakeFiles/run.dir/Engine/GColliderComp.cpp.o.d -o CMakeFiles/run.dir/Engine/GColliderComp.cpp.o -c /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.cpp
 
-CMakeFiles/run.dir/Engine/ColliderComp.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/run.dir/Engine/ColliderComp.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.cpp > CMakeFiles/run.dir/Engine/ColliderComp.cpp.i
+CMakeFiles/run.dir/Engine/GColliderComp.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/run.dir/Engine/GColliderComp.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.cpp > CMakeFiles/run.dir/Engine/GColliderComp.cpp.i
 
-CMakeFiles/run.dir/Engine/ColliderComp.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/run.dir/Engine/ColliderComp.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.cpp -o CMakeFiles/run.dir/Engine/ColliderComp.cpp.s
+CMakeFiles/run.dir/Engine/GColliderComp.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/run.dir/Engine/GColliderComp.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.cpp -o CMakeFiles/run.dir/Engine/GColliderComp.cpp.s
 
 CMakeFiles/run.dir/Engine/GObject.cpp.o: CMakeFiles/run.dir/flags.make
 CMakeFiles/run.dir/Engine/GObject.cpp.o: /home/joseph/Documents/Github/CppEngine/Engine/GObject.cpp
@@ -189,7 +189,7 @@ run_OBJECTS = \
 "CMakeFiles/run.dir/main.cpp.o" \
 "CMakeFiles/run.dir/Engine/GPhysics.cpp.o" \
 "CMakeFiles/run.dir/Engine/GScene.cpp.o" \
-"CMakeFiles/run.dir/Engine/ColliderComp.cpp.o" \
+"CMakeFiles/run.dir/Engine/GColliderComp.cpp.o" \
 "CMakeFiles/run.dir/Engine/GObject.cpp.o" \
 "CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o" \
 "CMakeFiles/run.dir/Engine/GSpringComponent.cpp.o" \
@@ -201,7 +201,7 @@ run_EXTERNAL_OBJECTS =
 run: CMakeFiles/run.dir/main.cpp.o
 run: CMakeFiles/run.dir/Engine/GPhysics.cpp.o
 run: CMakeFiles/run.dir/Engine/GScene.cpp.o
-run: CMakeFiles/run.dir/Engine/ColliderComp.cpp.o
+run: CMakeFiles/run.dir/Engine/GColliderComp.cpp.o
 run: CMakeFiles/run.dir/Engine/GObject.cpp.o
 run: CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o
 run: CMakeFiles/run.dir/Engine/GSpringComponent.cpp.o

@@ -1,6 +1,6 @@
 #include "GScene.h"
 
-GScene::GScene() : physics(this)
+GScene::GScene() : physics(this), cam(this)
 {
 
 }
@@ -9,6 +9,7 @@ void GScene::Begin()
 {
     for (auto& obj : sceneObjects)
     {
+        obj->setInvMasses();
         for (auto& comp : obj->myComponents)
         {
             comp->Begin();
@@ -19,8 +20,10 @@ void GScene::Begin()
 
 void GScene::Tick_Objects(float DeltaTime)
 {
+    cam.Tick(DeltaTime);
     for (auto& obj : sceneObjects)
     {
+        if (!obj->enabled) continue;
         obj->Tick(DeltaTime);
         for (auto& comp : obj->myComponents)
         {

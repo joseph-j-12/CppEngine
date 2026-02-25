@@ -184,11 +184,12 @@ CMakeFiles/run.dir/main.cpp.o: \
  /usr/include/c++/15/backward/auto_ptr.h \
  /usr/include/c++/15/pstl/glue_memory_defs.h \
  /usr/include/c++/15/pstl/execution_defs.h \
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
+ /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h \
  /home/joseph/Documents/Github/CppEngine/Engine/GTransform.h \
  /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
  /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
  /home/joseph/Documents/Github/CppEngine/Engine/GSpatialHash.h \
  /home/joseph/Documents/Github/CppEngine/Engine/GSpringComponent.h \

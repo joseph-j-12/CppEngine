@@ -139,7 +139,8 @@ CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o: \
  /usr/include/c++/15/backward/auto_ptr.h \
  /usr/include/c++/15/pstl/glue_memory_defs.h \
  /usr/include/c++/15/pstl/execution_defs.h \
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
+ /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h \
  /usr/include/c++/15/iostream /usr/include/c++/15/ostream \
  /usr/include/c++/15/bits/ostream.h /usr/include/c++/15/ios \
  /usr/include/c++/15/bits/char_traits.h \

@@ -7,7 +7,7 @@
 #include "GComponent.h"
 #include <vector>
 #include <memory>
-#include "ColliderComp.h"
+#include "GColliderComp.h"
 
 // #include <stdio.h>
 // #include <iostream>
@@ -30,6 +30,10 @@ class GObject{
     float friction;
 
     bool enabled;
+
+    float invMass;
+    float invMomentOfInertia;
+
     GObject(GScene* scene)
     {
         physicsEnabled = false;
@@ -40,10 +44,18 @@ class GObject{
         bounce = 0.1f;
         friction = 0.1f;
         myScene = scene;
+        enabled = true;
+        setInvMasses();
         
     }
 
-    virtual void Begin() {};
+    //to be called every time mass or moment of inertia changes
+    void setInvMasses()
+    {
+        invMass = 1/mass;
+        invMomentOfInertia = 1/momentOfInertia;
+    }
+    virtual void Begin() {setInvMasses();};
 
     virtual void Tick(float DeltaTime) {};
 

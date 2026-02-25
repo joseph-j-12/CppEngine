@@ -9,7 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/joseph/Documents/Github/CppEngine/CarScene.cpp" "CMakeFiles/run.dir/CarScene.cpp.o" "gcc" "CMakeFiles/run.dir/CarScene.cpp.o.d"
-  "/home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.cpp" "CMakeFiles/run.dir/Engine/ColliderComp.cpp.o" "gcc" "CMakeFiles/run.dir/Engine/ColliderComp.cpp.o.d"
+  "/home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.cpp" "CMakeFiles/run.dir/Engine/GColliderComp.cpp.o" "gcc" "CMakeFiles/run.dir/Engine/GColliderComp.cpp.o.d"
   "/home/joseph/Documents/Github/CppEngine/Engine/GObject.cpp" "CMakeFiles/run.dir/Engine/GObject.cpp.o" "gcc" "CMakeFiles/run.dir/Engine/GObject.cpp.o.d"
   "/home/joseph/Documents/Github/CppEngine/Engine/GPhysics.cpp" "CMakeFiles/run.dir/Engine/GPhysics.cpp.o" "gcc" "CMakeFiles/run.dir/Engine/GPhysics.cpp.o.d"
   "/home/joseph/Documents/Github/CppEngine/Engine/GScene.cpp" "CMakeFiles/run.dir/Engine/GScene.cpp.o" "gcc" "CMakeFiles/run.dir/Engine/GScene.cpp.o.d"

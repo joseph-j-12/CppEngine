@@ -153,29 +153,29 @@ CarScene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/CarScene.cpp.s
 .PHONY : CarScene.cpp.s
 
-Engine/ColliderComp.o: Engine/ColliderComp.cpp.o
-.PHONY : Engine/ColliderComp.o
+Engine/GColliderComp.o: Engine/GColliderComp.cpp.o
+.PHONY : Engine/GColliderComp.o
 
 # target to build an object file
-Engine/ColliderComp.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/ColliderComp.cpp.o
-.PHONY : Engine/ColliderComp.cpp.o
+Engine/GColliderComp.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GColliderComp.cpp.o
+.PHONY : Engine/GColliderComp.cpp.o
 
-Engine/ColliderComp.i: Engine/ColliderComp.cpp.i
-.PHONY : Engine/ColliderComp.i
+Engine/GColliderComp.i: Engine/GColliderComp.cpp.i
+.PHONY : Engine/GColliderComp.i
 
 # target to preprocess a source file
-Engine/ColliderComp.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/ColliderComp.cpp.i
-.PHONY : Engine/ColliderComp.cpp.i
+Engine/GColliderComp.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GColliderComp.cpp.i
+.PHONY : Engine/GColliderComp.cpp.i
 
-Engine/ColliderComp.s: Engine/ColliderComp.cpp.s
-.PHONY : Engine/ColliderComp.s
+Engine/GColliderComp.s: Engine/GColliderComp.cpp.s
+.PHONY : Engine/GColliderComp.s
 
 # target to generate assembly for a file
-Engine/ColliderComp.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/ColliderComp.cpp.s
-.PHONY : Engine/ColliderComp.cpp.s
+Engine/GColliderComp.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/Engine/GColliderComp.cpp.s
+.PHONY : Engine/GColliderComp.cpp.s
 
 Engine/GObject.o: Engine/GObject.cpp.o
 .PHONY : Engine/GObject.o
@@ -333,9 +333,9 @@ help:
 	@echo "... CarScene.o"
 	@echo "... CarScene.i"
 	@echo "... CarScene.s"
-	@echo "... Engine/ColliderComp.o"
-	@echo "... Engine/ColliderComp.i"
-	@echo "... Engine/ColliderComp.s"
+	@echo "... Engine/GColliderComp.o"
+	@echo "... Engine/GColliderComp.i"
+	@echo "... Engine/GColliderComp.s"
 	@echo "... Engine/GObject.o"
 	@echo "... Engine/GObject.i"
 	@echo "... Engine/GObject.s"

@@ -16,6 +16,7 @@ void GSpringComponent::Tick(float deltaTime)
     {
         if (gobject)
         {
+            if (!gobject->enabled || !otherObject->enabled) return;
             Vec2D myPointWorld = gobject->transform.local_to_scene(myAttachedPos);
             Vec2D otherPointWorld = otherObject->transform.local_to_scene(otherAttachedPos);
 

@@ -5,8 +5,8 @@ CMakeFiles/run.dir/CarScene.cpp.o
  /home/joseph/Documents/Github/CppEngine/CarScene.cpp
  /home/joseph/Documents/Github/CppEngine/BaseEngine.h
  /home/joseph/Documents/Github/CppEngine/CarScene.h
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h
  /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h
  /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h
  /home/joseph/Documents/Github/CppEngine/Engine/GObject.h
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h
@@ -267,9 +267,10 @@ CMakeFiles/run.dir/CarScene.cpp.o
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
-CMakeFiles/run.dir/Engine/ColliderComp.cpp.o
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.cpp
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h
+CMakeFiles/run.dir/Engine/GColliderComp.cpp.o
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.cpp
+ /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h
  /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h
  /home/joseph/Documents/Github/CppEngine/Engine/GObject.h
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h
@@ -473,7 +474,7 @@ CMakeFiles/run.dir/Engine/ColliderComp.cpp.o
 
 CMakeFiles/run.dir/Engine/GObject.cpp.o
  /home/joseph/Documents/Github/CppEngine/Engine/GObject.cpp
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h
  /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h
  /home/joseph/Documents/Github/CppEngine/Engine/GObject.h
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h
@@ -676,7 +677,8 @@ CMakeFiles/run.dir/Engine/GObject.cpp.o
 
 CMakeFiles/run.dir/Engine/GPhysics.cpp.o
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.cpp
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h
  /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h
  /home/joseph/Documents/Github/CppEngine/Engine/GObject.h
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h
@@ -944,7 +946,8 @@ CMakeFiles/run.dir/Engine/GPhysics.cpp.o
 
 CMakeFiles/run.dir/Engine/GScene.cpp.o
  /home/joseph/Documents/Github/CppEngine/Engine/GScene.cpp
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h
  /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h
  /home/joseph/Documents/Github/CppEngine/Engine/GObject.h
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h
@@ -1148,7 +1151,8 @@ CMakeFiles/run.dir/Engine/GScene.cpp.o
 
 CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o
  /home/joseph/Documents/Github/CppEngine/Engine/GSpatialHash.cpp
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h
  /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h
  /home/joseph/Documents/Github/CppEngine/Engine/GObject.h
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h
@@ -1410,7 +1414,8 @@ CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o
 
 CMakeFiles/run.dir/Engine/GSpringComponent.cpp.o
  /home/joseph/Documents/Github/CppEngine/Engine/GSpringComponent.cpp
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h
  /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h
  /home/joseph/Documents/Github/CppEngine/Engine/GObject.h
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h
@@ -1624,8 +1629,8 @@ CMakeFiles/run.dir/main.cpp.o
  /home/joseph/Documents/Github/CppEngine/main.cpp
  /home/joseph/Documents/Github/CppEngine/BaseEngine.h
  /home/joseph/Documents/Github/CppEngine/CarScene.h
- /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h
  /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h
+ /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h
  /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h
  /home/joseph/Documents/Github/CppEngine/Engine/GObject.h
  /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h
@@ -2036,7 +2041,7 @@ run
  /usr/lib64/libxcb.so.1
  /usr/lib64/libz.so.1
  /home/joseph/Documents/Github/CppEngine/build/CMakeFiles/run.dir/CarScene.cpp.o
- /home/joseph/Documents/Github/CppEngine/build/CMakeFiles/run.dir/Engine/ColliderComp.cpp.o
+ /home/joseph/Documents/Github/CppEngine/build/CMakeFiles/run.dir/Engine/GColliderComp.cpp.o
  /home/joseph/Documents/Github/CppEngine/build/CMakeFiles/run.dir/Engine/GObject.cpp.o
  /home/joseph/Documents/Github/CppEngine/build/CMakeFiles/run.dir/Engine/GPhysics.cpp.o
  /home/joseph/Documents/Github/CppEngine/build/CMakeFiles/run.dir/Engine/GScene.cpp.o

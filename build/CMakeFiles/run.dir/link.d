@@ -5,7 +5,7 @@ run: \
   CMakeFiles/run.dir/main.cpp.o \
   CMakeFiles/run.dir/Engine/GPhysics.cpp.o \
   CMakeFiles/run.dir/Engine/GScene.cpp.o \
-  CMakeFiles/run.dir/Engine/ColliderComp.cpp.o \
+  CMakeFiles/run.dir/Engine/GColliderComp.cpp.o \
   CMakeFiles/run.dir/Engine/GObject.cpp.o \
   CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o \
   CMakeFiles/run.dir/Engine/GSpringComponent.cpp.o \
@@ -73,7 +73,7 @@ CMakeFiles/run.dir/Engine/GPhysics.cpp.o:
 
 CMakeFiles/run.dir/Engine/GScene.cpp.o:
 
-CMakeFiles/run.dir/Engine/ColliderComp.cpp.o:
+CMakeFiles/run.dir/Engine/GColliderComp.cpp.o:
 
 CMakeFiles/run.dir/Engine/GObject.cpp.o:
 

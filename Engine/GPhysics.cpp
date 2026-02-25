@@ -2,7 +2,7 @@
 #include "GComponent.h"
 #include "GScene.h"
 #include "GObject.h"
-#include "ColliderComp.h"
+#include "GColliderComp.h"
 #include "GSpatialHash.h"
 #include <iostream>
 #include <cmath>
@@ -21,9 +21,9 @@ void GPhysics::Tick(float DeltaTime)
     ApplyVelocities(DeltaTime);
     for (auto& obj : myScene->sceneObjects)
     {
-        if (!obj->getPhysicsEnabled()) continue;
+        if (!obj->getPhysicsEnabled() || !obj->enabled) continue;
         obj->velocity = obj->velocity + Vec2D(0,-15.8)*DeltaTime;
-        //std::cout << obj->velocity.Y << std::endl;
+        // obj->setInvMasses();
     }
     Damping(DeltaTime);
     //std::cout << "test1" << std::endl;
@@ -45,6 +45,7 @@ void GPhysics::UpdateSpatialHashGrid()
     for (int i = 0; i < gColliderCount; i++)
     {
         //uint16_t a = 8;
+        if (gColliders[i]->gobject->enabled)
         grid.InsertCollider(gColliders[i], i);
         //std::cout << i << std::endl;
     }
@@ -345,7 +346,7 @@ void GPhysics::HandleCollision(Collision col)
             //applying coefficient of restitution formula
             float rxn = Vec2D::CrossProduct(r, col.normal);
             float j = multiplier * vel_normal_scalar;
-            float invMass = (1.f/col.col2->gobject->mass) + (rxn*rxn)/col.col2->gobject->momentOfInertia;
+            float invMass = (1.f*col.col2->gobject->invMass) + (rxn*rxn)*col.col2->gobject->invMomentOfInertia;
             j /= invMass;
             AddImpulseAtLocation(col.col2->gobject, col.point, -col.normal*j);
             vel_at_hit_point = col.col2->gobject->velocity_at_point(col.point);
@@ -360,7 +361,7 @@ void GPhysics::HandleCollision(Collision col)
             
             //tangent = -tangent;
             float rxt = Vec2D::CrossProduct(r, tangent);
-            float invMassTang = (1.f/col.col2->gobject->mass) + (rxt*rxt)/col.col2->gobject->momentOfInertia;
+            float invMassTang = (1.f*col.col2->gobject->invMass) + (rxt*rxt)*col.col2->gobject->invMomentOfInertia;
             float jt = Vec2D::DotProduct(vel_at_hit_point, tangent)/invMassTang;
             float maxFric = avg_friction*std::abs(j);
             //if (maxFric < 0) maxFric = -maxFric;
@@ -389,7 +390,7 @@ void GPhysics::HandleCollision(Collision col)
             //coeff of restitution formula j = -(1+e)*v
             float rxn = Vec2D::CrossProduct(r, col.normal);
             float j = multiplier * vel_normal_scalar;
-            float invMass = (1.f/col.col1->gobject->mass) + (rxn*rxn)/col.col1->gobject->momentOfInertia; //because impulse
+            float invMass = (1.f*col.col1->gobject->invMass) + (rxn*rxn)*col.col1->gobject->invMomentOfInertia; //because impulse
             j /= invMass;
             AddImpulseAtLocation(col.col1->gobject, col.point, -col.normal*j);
 
@@ -400,7 +401,7 @@ void GPhysics::HandleCollision(Collision col)
             float vel_along_tangent = Vec2D::DotProduct(tangent, vel_at_hit_point);
 
             float rxt = Vec2D::CrossProduct(r, tangent);
-            float invMassTang = (1.f/col.col1->gobject->mass) + (rxt*rxt)/col.col1->gobject->momentOfInertia;
+            float invMassTang = (1.f*col.col1->gobject->invMass) + (rxt*rxt)*col.col1->gobject->invMomentOfInertia;
             float jt = Vec2D::DotProduct(vel_at_hit_point, tangent)/invMassTang;
             float maxFric = avg_friction*std::abs(j);
             //if (maxFric < 0) maxFric = -maxFric;
@@ -441,8 +442,8 @@ void GPhysics::HandleCollision(Collision col)
             float r1xn = Vec2D::CrossProduct(R1p, col.normal);
             j *= Vec2D::DotProduct(col.normal, v21);
 
-            float invMass = (1.f/col.col1->gobject->mass) + (1.f/col.col2->gobject->mass);
-            invMass += (r1xn*r1xn)/col.col1->gobject->momentOfInertia + (r2xn*r2xn)/col.col2->gobject->momentOfInertia;
+            float invMass = (1.f*col.col1->gobject->invMass) + (1.f*col.col2->gobject->invMass);
+            invMass += (r1xn*r1xn)*col.col1->gobject->invMomentOfInertia + (r2xn*r2xn)*col.col2->gobject->invMomentOfInertia;
 
             j /= invMass;
 
@@ -459,8 +460,8 @@ void GPhysics::HandleCollision(Collision col)
             float r2xt = Vec2D::CrossProduct(R2p, tangent);
             float r1xt = Vec2D::CrossProduct(R1p, tangent);
 
-            float invMassTang = (1.f/col.col1->gobject->mass) + (1.f/col.col2->gobject->mass);
-            invMassTang += (r1xt*r1xt)/col.col1->gobject->momentOfInertia + (r2xt*r2xt)/col.col2->gobject->momentOfInertia;
+            float invMassTang = (1.f*col.col1->gobject->invMass) + (1.f/col.col2->gobject->invMass);
+            invMassTang += (r1xt*r1xt)*col.col1->gobject->invMomentOfInertia + (r2xt*r2xt)*col.col2->gobject->invMomentOfInertia;
 
             float jt = Vec2D::DotProduct(v21, tangent)/invMassTang;
 
@@ -490,10 +491,10 @@ void GPhysics::HandleCollision(Collision col)
 
 void GPhysics::AddImpulseAtLocation(GObject *const object, Vec2D location ,Vec2D force)
 {
-    Vec2D acc = force/object->mass;
+    Vec2D acc = force*object->invMass;
     Vec2D diff = location - object->transform.myScenePosition();
     float torque = Vec2D::CrossProduct(diff, force);
-    object->angularVelocity += torque/object->momentOfInertia;
+    object->angularVelocity += torque*object->invMomentOfInertia;
     //std::cout << acc.magnitude() << std::endl;
     object->velocity = object->velocity+acc;
 }
@@ -535,7 +536,7 @@ void GPhysics::Damping(float DeltaTime)
     float angularDamp = 0.05f;
     for (auto& obj : myScene->sceneObjects)
     {
-        if (!obj->getPhysicsEnabled()) continue;
+        if (!obj->getPhysicsEnabled() || !obj->enabled) continue;
         obj->velocity = obj->velocity*(1-linearDamp*DeltaTime);
         obj->angularVelocity = obj->angularVelocity*(1-angularDamp*DeltaTime);
     }

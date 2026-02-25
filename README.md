@@ -147,7 +147,7 @@ Square shape example
 ```cpp
 ColliderShapeTemplate shapeTemplate1;
 shapeTemplate1.numPoints = 4;
-shapeTemplate1.points = (Vec2D*)malloc(4 * sizeof(Vec2D));
+shapeTemplate1.points = new Vec2D[4];
 
 shapeTemplate1.points[0] = Vec2D(-10, -10);
 shapeTemplate1.points[1] = Vec2D(-10,  10);

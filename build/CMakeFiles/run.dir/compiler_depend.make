@@ -4,8 +4,8 @@
 CMakeFiles/run.dir/CarScene.cpp.o: /home/joseph/Documents/Github/CppEngine/CarScene.cpp \
   /home/joseph/Documents/Github/CppEngine/BaseEngine.h \
   /home/joseph/Documents/Github/CppEngine/CarScene.h \
-  /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
@@ -266,8 +266,9 @@ CMakeFiles/run.dir/CarScene.cpp.o: /home/joseph/Documents/Github/CppEngine/CarSc
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
-CMakeFiles/run.dir/Engine/ColliderComp.cpp.o: /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.cpp \
-  /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
+CMakeFiles/run.dir/Engine/GColliderComp.cpp.o: /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.cpp \
+  /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
@@ -470,7 +471,7 @@ CMakeFiles/run.dir/Engine/ColliderComp.cpp.o: /home/joseph/Documents/Github/CppE
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
 CMakeFiles/run.dir/Engine/GObject.cpp.o: /home/joseph/Documents/Github/CppEngine/Engine/GObject.cpp \
-  /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
@@ -672,7 +673,8 @@ CMakeFiles/run.dir/Engine/GObject.cpp.o: /home/joseph/Documents/Github/CppEngine
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
 CMakeFiles/run.dir/Engine/GPhysics.cpp.o: /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.cpp \
-  /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
@@ -939,7 +941,8 @@ CMakeFiles/run.dir/Engine/GPhysics.cpp.o: /home/joseph/Documents/Github/CppEngin
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
 CMakeFiles/run.dir/Engine/GScene.cpp.o: /home/joseph/Documents/Github/CppEngine/Engine/GScene.cpp \
-  /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
@@ -1142,7 +1145,8 @@ CMakeFiles/run.dir/Engine/GScene.cpp.o: /home/joseph/Documents/Github/CppEngine/
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
 CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o: /home/joseph/Documents/Github/CppEngine/Engine/GSpatialHash.cpp \
-  /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
@@ -1403,7 +1407,8 @@ CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o: /home/joseph/Documents/Github/CppE
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
 CMakeFiles/run.dir/Engine/GSpringComponent.cpp.o: /home/joseph/Documents/Github/CppEngine/Engine/GSpringComponent.cpp \
-  /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
@@ -1616,8 +1621,8 @@ CMakeFiles/run.dir/Engine/GSpringComponent.cpp.o: /home/joseph/Documents/Github/
 CMakeFiles/run.dir/main.cpp.o: /home/joseph/Documents/Github/CppEngine/main.cpp \
   /home/joseph/Documents/Github/CppEngine/BaseEngine.h \
   /home/joseph/Documents/Github/CppEngine/CarScene.h \
-  /home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GCamera.h \
+  /home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GObject.h \
   /home/joseph/Documents/Github/CppEngine/Engine/GPhysics.h \
@@ -2027,7 +2032,7 @@ run: /lib64/ld-linux-x86-64.so.2 \
   /usr/lib64/libxcb.so.1 \
   /usr/lib64/libz.so.1 \
   CMakeFiles/run.dir/CarScene.cpp.o \
-  CMakeFiles/run.dir/Engine/ColliderComp.cpp.o \
+  CMakeFiles/run.dir/Engine/GColliderComp.cpp.o \
   CMakeFiles/run.dir/Engine/GObject.cpp.o \
   CMakeFiles/run.dir/Engine/GPhysics.cpp.o \
   CMakeFiles/run.dir/Engine/GScene.cpp.o \
@@ -2043,8 +2048,6 @@ CMakeFiles/run.dir/Engine/GSpatialHash.cpp.o:
 CMakeFiles/run.dir/Engine/GPhysics.cpp.o:
 
 CMakeFiles/run.dir/Engine/GObject.cpp.o:
-
-CMakeFiles/run.dir/Engine/ColliderComp.cpp.o:
 
 CMakeFiles/run.dir/CarScene.cpp.o:
 
@@ -2223,6 +2226,8 @@ CMakeFiles/run.dir/CarScene.cpp.o:
 /usr/include/c++/15/locale:
 
 /home/joseph/Documents/Github/CppEngine/Engine/GObject.cpp:
+
+/home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.cpp:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h:
 
@@ -2464,23 +2469,19 @@ CMakeFiles/run.dir/main.cpp.o:
 
 /home/joseph/Documents/Github/CppEngine/Engine/GComponent.h:
 
-/home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.h:
-
 /usr/include/c++/15/bits/basic_string.tcc:
 
 /usr/include/c++/15/bits/streambuf.tcc:
 
-/usr/include/c++/15/bits/istream.tcc:
+/usr/include/bits/atomic_wide_counter.h:
 
-/usr/include/c++/15/bits/allocated_ptr.h:
+/usr/include/bits/locale.h:
 
-/usr/include/c++/15/bits/stl_tree.h:
+/usr/include/SFML/Window/Context.hpp:
 
-/usr/include/bits/waitstatus.h:
+/usr/include/asm/posix_types_64.h:
 
-/usr/include/bits/wchar.h:
-
-/usr/include/bits/types/struct___jmp_buf_tag.h:
+/home/joseph/Documents/Github/CppEngine/BaseEngine.h:
 
 /usr/include/bits/types/__locale_t.h:
 
@@ -2491,8 +2492,6 @@ CMakeFiles/run.dir/main.cpp.o:
 /usr/include/c++/15/x86_64-redhat-linux/bits/ctype_base.h:
 
 /usr/include/c++/15/istream:
-
-/home/joseph/Documents/Github/CppEngine/BaseEngine.h:
 
 /usr/include/SFML/Graphics/RenderWindow.hpp:
 
@@ -2506,13 +2505,13 @@ CMakeFiles/run.dir/main.cpp.o:
 
 /usr/include/bits/iscanonical.h:
 
-/usr/include/bits/atomic_wide_counter.h:
+/usr/include/c++/15/ext/string_conversions.h:
 
-/usr/include/bits/locale.h:
+/usr/include/c++/15/bits/ostream_insert.h:
 
-/usr/include/SFML/Window/Context.hpp:
+/usr/include/bits/types/error_t.h:
 
-/usr/include/asm/posix_types_64.h:
+/usr/include/c++/15/bits/utility.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/libstdc++.so:
 
@@ -2580,10 +2579,6 @@ CMakeFiles/run.dir/main.cpp.o:
 
 /usr/include/bits/pthread_stack_min-dynamic.h:
 
-/usr/include/c++/15/bits/vector.tcc:
-
-/usr/include/c++/15/iostream:
-
 /usr/include/bits/pthreadtypes-arch.h:
 
 /usr/include/gnu/stubs.h:
@@ -2600,11 +2595,21 @@ CMakeFiles/run.dir/main.cpp.o:
 
 /usr/include/bits/select.h:
 
-/usr/include/c++/15/bits/ostream_insert.h:
+/usr/include/c++/15/bits/istream.tcc:
 
-/usr/include/bits/types/error_t.h:
+/usr/include/c++/15/bits/allocated_ptr.h:
 
-/usr/include/c++/15/bits/utility.h:
+/usr/include/c++/15/iostream:
+
+/usr/include/c++/15/bits/vector.tcc:
+
+/usr/include/c++/15/bits/stl_tree.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/bits/types/struct___jmp_buf_tag.h:
 
 /usr/include/bits/types/cookie_io_functions_t.h:
 
@@ -2613,6 +2618,8 @@ CMakeFiles/run.dir/main.cpp.o:
 /usr/include/bits/stdint-uintn.h:
 
 /usr/include/bits/types/struct_timeval.h:
+
+CMakeFiles/run.dir/Engine/GColliderComp.cpp.o:
 
 /usr/include/features.h:
 
@@ -2712,6 +2719,12 @@ CMakeFiles/run.dir/main.cpp.o:
 
 /usr/include/c++/15/bits/stl_tempbuf.h:
 
+/usr/include/c++/15/x86_64-redhat-linux/bits/os_defines.h:
+
+/usr/include/c++/15/bits/functexcept.h:
+
+/usr/include/c++/15/bits/stl_vector.h:
+
 /usr/include/c++/15/cwctype:
 
 /usr/include/bits/types/struct_tm.h:
@@ -2758,14 +2771,6 @@ CMakeFiles/run.dir/main.cpp.o:
 
 /usr/include/c++/15/ext/numeric_traits.h:
 
-/usr/include/c++/15/ext/string_conversions.h:
-
-/usr/include/c++/15/bits/functexcept.h:
-
-/usr/include/c++/15/bits/stl_vector.h:
-
-/usr/include/c++/15/x86_64-redhat-linux/bits/os_defines.h:
-
 /usr/include/c++/15/ios:
 
 /usr/include/c++/15/iosfwd:
@@ -2797,6 +2802,8 @@ CMakeFiles/run.dir/Engine/GScene.cpp.o:
 /usr/include/c++/15/string:
 
 /usr/include/c++/15/string_view:
+
+/home/joseph/Documents/Github/CppEngine/Engine/GColliderComp.h:
 
 /usr/include/bits/endian.h:
 
@@ -2879,8 +2886,6 @@ CMakeFiles/run.dir/Engine/GScene.cpp.o:
 /usr/include/bits/wordsize.h:
 
 /usr/include/stdio.h:
-
-/home/joseph/Documents/Github/CppEngine/Engine/ColliderComp.cpp:
 
 /usr/include/stdlib.h:
 

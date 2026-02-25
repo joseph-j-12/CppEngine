@@ -6,7 +6,7 @@
 #include "Engine/GTransform.h"
 #include "Engine/GObject.h"
 #include "Engine/GComponent.h"
-#include "Engine/ColliderComp.h"
+#include "Engine/GColliderComp.h"
 #include "Engine/GPhysics.h"
 #include "Engine/GSpatialHash.h"
 #include "Engine/GSpringComponent.h"

@@ -5,7 +5,7 @@ set(SOURCES
     main.cpp
     Engine/GPhysics.cpp
     Engine/GScene.cpp
-    Engine/ColliderComp.cpp
+    Engine/GColliderComp.cpp
     Engine/GObject.cpp
     Engine/GSpatialHash.cpp
     Engine/GSpringComponent.cpp
