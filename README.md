@@ -238,8 +238,11 @@ The physics engine itself has **no dependency on rendering logic** and can be re
 
 This example creates a spring that behaves like a suspension. It is attached from the player to the leftWheel object.
 constrainAlongAxis flag will make it behave it like a suspension. If it is false, it will simply apply a force based onm distance no matter what direction it is.
+
 attachDirection is the direction of spring in local space. 
+
 myAttachedPos is the point it is attached in.
+
 otherAttachedPos is the point it is attached on the other object (wheel) in the local space of the other object.
 
 
