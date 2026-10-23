@@ -1,3 +1,0 @@
-/home/joseph/Documents/Github/CppEngine/build/CMakeFiles/run.dir
-/home/joseph/Documents/Github/CppEngine/build/CMakeFiles/edit_cache.dir
-/home/joseph/Documents/Github/CppEngine/build/CMakeFiles/rebuild_cache.dir
